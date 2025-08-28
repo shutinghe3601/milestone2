@@ -3,6 +3,7 @@ import os
 import praw
 from dotenv import load_dotenv
 
+
 # Load environment variables
 load_dotenv()
 
@@ -15,8 +16,6 @@ class NewsRedditAPI:
         self.reddit = praw.Reddit(
             client_id=os.getenv("REDDIT_CLIENT_ID"),
             client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
-            username=os.getenv("REDDIT_USERNAME"),
-            password=os.getenv("REDDIT_PASSWORD"),
             user_agent=os.getenv("REDDIT_USER_AGENT"),
         )
         print("✅ Reddit API connected!")
@@ -78,8 +77,9 @@ class NewsRedditAPI:
                 "is_mod": user.is_mod,
             }
             return user_info
-        except:
-            return None
+        except Exception as e:
+            print(f"Error getting user info: {e}")
+            raise e
 
 
 # Usage examples
