@@ -16,7 +16,7 @@ Ask the author for the `.env` file and place it in the project root directory.
 ## Usage
 
 ```python
-from news_reddit_api import NewsRedditAPI
+from src.news_reddit_api import NewsRedditAPI
 
 api = NewsRedditAPI()
 
@@ -39,5 +39,5 @@ user_info = api.get_user_info('username')
 ## Run
 
 ```bash
-python news_reddit_api.py
+python -m src.news_reddit_api
 ```

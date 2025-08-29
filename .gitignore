@@ -1,1 +1,11 @@
 .env
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+*.pyc
+*.pyo
+*.DS_Store
+
+# Data directories (do not commit raw/processed data)
+data/

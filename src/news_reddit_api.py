@@ -156,3 +156,4 @@ if __name__ == "__main__":
     example_1_get_news_posts()
     example_2_get_comments()
     example_3_get_user_info()
+
