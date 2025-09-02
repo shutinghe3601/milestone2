@@ -9,3 +9,4 @@ __pycache__/
 
 # Data directories (do not commit raw/processed data)
 data/
+
