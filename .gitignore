@@ -1,6 +1,7 @@
 # Data files
-/data/raw/
-/data/interim/
+data/raw/*
+!data/raw/README.md
+data/interim/*
 *.jsonl
 
 # Keep external data directory structure but ignore large files
