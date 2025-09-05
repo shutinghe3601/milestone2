@@ -1,1 +1,43 @@
+# Data files
+/data/raw/
+/data/interim/
+*.jsonl
+
+# Keep external data directory structure but ignore large files
+/data/external/*.txt
+/data/external/*.csv
+
+# Cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment files
 .env
+.venv
+env/
+venv/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
