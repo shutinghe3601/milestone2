@@ -4,7 +4,7 @@ import praw
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+load_dotenv("secret.env")
 
 
 class NewsRedditAPI:
