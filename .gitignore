@@ -25,6 +25,7 @@ htmlcov/
 .venv
 env/
 venv/
+secret.env
 
 # IDE files
 .vscode/
@@ -42,4 +43,5 @@ Thumbs.db
 # Logs
 *.log
 logs/
-secret.env
+*.gitkeep
+
