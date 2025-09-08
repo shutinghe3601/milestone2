@@ -5,8 +5,9 @@ This script pulls posts and comments from mental health related subreddits
 according to the specifications in Instructions.txt and configs/pull_config.yml.
 
 Output:
-- posts_with_comments_YYYYMMDD.jsonl: One line per post including top-K comments
-- execution_log_YYYYMMDD.md: QC log with counts and statistics
+- submission.jsonl: Posts with required fields
+- comments_topk.jsonl: Top-K comments per post
+- execution_log.md: QC log with counts and statistics
 """
 
 import json
@@ -104,12 +105,6 @@ class RedditDataPuller:
             level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
         )
         self.logger = logging.getLogger(__name__)
-
-        # Stamp for output filenames
-        self.date_str = datetime.now().strftime("%Y%m%d")
-
-        # Stamp for output filenames
-        self.date_str = datetime.now().strftime("%Y%m%d")
 
         print("✅ Reddit API connected and configuration loaded!")
         print(
@@ -301,7 +296,6 @@ class RedditDataPuller:
 
         all_posts = []
         all_comments = []
-        combined_posts = []  # posts enriched with top comments
 
         # Step 1: Pull posts from each subreddit
         for subreddit in self.config["subreddits"]:
@@ -320,10 +314,6 @@ class RedditDataPuller:
                     comments = self.extract_top_comments(
                         submission, self.config["comments"]["top_k"]
                     )
-                    # Attach top comments directly to the post
-                    post_with_comments = dict(post)
-                    post_with_comments["top_comments"] = comments
-                    combined_posts.append(post_with_comments)
                     all_comments.extend(comments)
                 except Exception as e:
                     self.logger.warning(f"Error processing post {post['post_id']}: {e}")
@@ -331,8 +321,8 @@ class RedditDataPuller:
                 # Rate limiting
                 time.sleep(0.5)
 
-        # Step 3: Write a single JSONL file with posts + top comments
-        self.write_jsonl_files(combined_posts, all_comments)
+        # Step 3: Write JSONL files
+        self.write_jsonl_files(all_posts, all_comments)
 
         # Step 4: Generate QC log
         self.generate_qc_log(all_posts, all_comments)
@@ -340,27 +330,28 @@ class RedditDataPuller:
         self.logger.info("Data pull completed successfully!")
 
     def write_jsonl_files(self, posts: List[Dict], comments: List[Dict]):
-        """Write combined posts (each with top comments) to JSONL file"""
+        """Write posts and comments to JSONL files"""
         # Ensure data directory exists
         os.makedirs("data/raw", exist_ok=True)
 
-        # Write combined posts with comments
-        combined_file = f"data/raw/posts_with_comments_{self.date_str}.jsonl"
-        with open(combined_file, "w", encoding="utf-8") as f:
+        # Write posts
+        posts_file = "data/raw/submission.jsonl"
+        with open(posts_file, "w", encoding="utf-8") as f:
             for post in posts:
-                # Ensure only top-K comments are present (defensive)
-                comments_field = post.get("top_comments", [])
-                if len(comments_field) > self.config["comments"]["top_k"]:
-                    comments_field = comments_field[: self.config["comments"]["top_k"]]
-                    post = dict(post)
-                    post["top_comments"] = comments_field
                 f.write(json.dumps(post, ensure_ascii=False) + "\n")
 
-        self.logger.info(f"Written {len(posts)} posts to {combined_file}")
+        # Write comments
+        comments_file = "data/raw/comments_topk.jsonl"
+        with open(comments_file, "w", encoding="utf-8") as f:
+            for comment in comments:
+                f.write(json.dumps(comment, ensure_ascii=False) + "\n")
+
+        self.logger.info(f"Written {len(posts)} posts to {posts_file}")
+        self.logger.info(f"Written {len(comments)} comments to {comments_file}")
 
     def generate_qc_log(self, posts: List[Dict], comments: List[Dict]):
         """Generate quality control log"""
-        log_file = f"data/raw/execution_log_{self.date_str}.md"
+        log_file = "data/raw/execution_log.md"
 
         with open(log_file, "w", encoding="utf-8") as f:
             f.write("# Reddit Data Pull - Execution Log\n\n")
