@@ -1,6 +1,6 @@
 time_range: { months_back: 12 }  # Dynamic: last N months from today
-subreddits: [artificial intelligence, OpenAI] #[anxiety, healthanxiety, mentalhealth, TrueOffMyChest]
-per_subreddit_posts: 5 # 1000
+subreddits: [artificial, OpenAI] #[anxiety, healthanxiety, mentalhealth, TrueOffMyChest]
+per_subreddit_posts: 25 # target ~50 total across 2 subreddits
 comments: { top_k: 3, sort: score, min_len: 10 }
 filters: { english_only: true, exclude_nsfw: true, exclude_removed: true }
 privacy: { drop_author: true }

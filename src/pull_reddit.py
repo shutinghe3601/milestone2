@@ -169,12 +169,22 @@ class RedditDataPuller:
         ):
             self.stats["time_range"]["latest"] = submission.created_utc
 
+        # Build a Reddit-only URL (full permalink)
+        permalink_full = (
+            f"https://www.reddit.com{submission.permalink}"
+            if hasattr(submission, "permalink") and submission.permalink
+            else None
+        )
+
         return {
             "post_id": submission.id,
             "subreddit": str(submission.subreddit),
             "created_utc": submission.created_utc,
             "title": title_text,
             "selftext": selftext,
+            # Only include Reddit URLs: set url to the full Reddit permalink
+            "url": permalink_full,
+            "permalink": permalink_full,
             "score": submission.score,
             "num_comments": submission.num_comments,
             "upvote_ratio": submission.upvote_ratio,
