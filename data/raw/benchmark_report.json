@@ -1,0 +1,134 @@
+{
+  "rate_limits": {
+    "total_requests": "20",
+    "successful_requests": "20",
+    "errors": "0",
+    "total_time": "4.7478978633880615",
+    "avg_response_time": "0.13373488187789917",
+    "requests_per_second": "4.212390530601718",
+    "response_times": "[0.3548848628997803, 0.13387680053710938, 0.13741803169250488, 0.10434985160827637, 0.12453198432922363, 0.1320819854736328, 0.12402892112731934, 0.10515713691711426, 0.09944677352905273, 0.11031103134155273, 0.10929012298583984, 0.1035611629486084, 0.17291688919067383, 0.09507417678833008, 0.19034695625305176, 0.13813996315002441, 0.10319209098815918, 0.10501313209533691, 0.10672593116760254, 0.12434983253479004]"
+  },
+  "subreddit_sizes": {
+    "anxiety": "{'subreddit': 'anxiety', 'time_window_days': 30, 'posts_in_window': 986, 'total_processed': 986, 'processing_time': 20.210075855255127, 'posts_per_second': 48.787545730245995}",
+    "healthanxiety": "{'subreddit': 'healthanxiety', 'time_window_days': 30, 'posts_in_window': 109, 'total_processed': 110, 'processing_time': 3.138061761856079, 'posts_per_second': 34.734816670889685}",
+    "mentalhealth": "{'subreddit': 'mentalhealth', 'time_window_days': 30, 'posts_in_window': 984, 'total_processed': 984, 'processing_time': 18.823104858398438, 'posts_per_second': 52.27617905772659}",
+    "TrueOffMyChest": "{'subreddit': 'TrueOffMyChest', 'time_window_days': 30, 'posts_in_window': 963, 'total_processed': 963, 'processing_time': 21.536786317825317, 'posts_per_second': 44.714192070659834}"
+  },
+  "comment_extraction": {
+    "subreddit": "anxiety",
+    "posts_processed": "20",
+    "total_comments": "75",
+    "posts_with_comments": "15",
+    "avg_comments_per_post": "3.75",
+    "total_time": "3.3525004386901855",
+    "avg_time_per_post": "0.1676250219345093"
+  },
+  "recommendations": {
+    "api_limits": {
+      "requests_per_minute": 60,
+      "requests_per_hour": 3600,
+      "estimated_posts_per_minute": 51.38636023797487,
+      "estimated_posts_per_hour": 3083.1816142784924,
+      "estimated_posts_per_day": 73996.35874268382
+    },
+    "recommendations": {
+      "pilot_study": {
+        "posts_per_subreddit": 100,
+        "total_posts": 400,
+        "estimated_time": "10-15 minutes",
+        "description": "Quick validation and initial analysis"
+      },
+      "development": {
+        "posts_per_subreddit": 500,
+        "total_posts": 2000,
+        "estimated_time": "1-2 hours",
+        "description": "Model development and testing"
+      },
+      "production": {
+        "posts_per_subreddit": 1000,
+        "total_posts": 4000,
+        "estimated_time": "2-4 hours",
+        "description": "Full dataset for final analysis"
+      },
+      "comprehensive": {
+        "posts_per_subreddit": 2000,
+        "total_posts": 8000,
+        "estimated_time": "4-8 hours",
+        "description": "Maximum practical dataset"
+      }
+    },
+    "benchmark_data": {
+      "rate_limits": {
+        "total_requests": 20,
+        "successful_requests": 20,
+        "errors": 0,
+        "total_time": 4.7478978633880615,
+        "avg_response_time": 0.13373488187789917,
+        "requests_per_second": 4.212390530601718,
+        "response_times": [
+          0.3548848628997803,
+          0.13387680053710938,
+          0.13741803169250488,
+          0.10434985160827637,
+          0.12453198432922363,
+          0.1320819854736328,
+          0.12402892112731934,
+          0.10515713691711426,
+          0.09944677352905273,
+          0.11031103134155273,
+          0.10929012298583984,
+          0.1035611629486084,
+          0.17291688919067383,
+          0.09507417678833008,
+          0.19034695625305176,
+          0.13813996315002441,
+          0.10319209098815918,
+          0.10501313209533691,
+          0.10672593116760254,
+          0.12434983253479004
+        ]
+      },
+      "subreddit_sizes": {
+        "anxiety": {
+          "subreddit": "anxiety",
+          "time_window_days": 30,
+          "posts_in_window": 986,
+          "total_processed": 986,
+          "processing_time": 20.210075855255127,
+          "posts_per_second": 48.787545730245995
+        },
+        "healthanxiety": {
+          "subreddit": "healthanxiety",
+          "time_window_days": 30,
+          "posts_in_window": 109,
+          "total_processed": 110,
+          "processing_time": 3.138061761856079,
+          "posts_per_second": 34.734816670889685
+        },
+        "mentalhealth": {
+          "subreddit": "mentalhealth",
+          "time_window_days": 30,
+          "posts_in_window": 984,
+          "total_processed": 984,
+          "processing_time": 18.823104858398438,
+          "posts_per_second": 52.27617905772659
+        },
+        "TrueOffMyChest": {
+          "subreddit": "TrueOffMyChest",
+          "time_window_days": 30,
+          "posts_in_window": 963,
+          "total_processed": 963,
+          "processing_time": 21.536786317825317,
+          "posts_per_second": 44.714192070659834
+        }
+      },
+      "comment_extraction": {
+        "subreddit": "anxiety",
+        "posts_processed": 20,
+        "total_comments": 75,
+        "posts_with_comments": 15,
+        "avg_comments_per_post": 3.75,
+        "total_time": 3.3525004386901855,
+        "avg_time_per_post": 0.1676250219345093
+      },
+      "recommendations": 
