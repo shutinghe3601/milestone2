@@ -1,5 +1,5 @@
 time_range: { months_back: 12 }  # Dynamic: last N months from today
-subreddits: [anxiety, healthanxiety, mentalhealth, TrueOffMyChest]
+subreddits: [anxiety, healthanxiety, mentalhealth, TrueOffMyChest, economy, OpenAI, GetMotivated, unpopularopinion]
 per_subreddit_posts: 1000
 comments: { top_k: 3, sort: score, min_len: 10 }
 filters: { english_only: true, exclude_nsfw: true, exclude_removed: true }
