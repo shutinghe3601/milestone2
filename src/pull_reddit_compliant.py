@@ -127,9 +127,9 @@ class CompliantRedditDataPuller:
         # Note: PRAW doesn't expose headers directly, but we can track our usage
         elapsed_time = time.time() - self.start_time
         requests_per_minute = (self.request_count / elapsed_time) * 60 if elapsed_time > 0 else 0
-        
+
         self.logger.info(f"API Usage - Requests: {self.request_count}, Rate: {requests_per_minute:.1f}/min")
-        
+
         # Warn if approaching limit
         if requests_per_minute > 80:  # 80% of 100/min limit
             self.logger.warning("Approaching rate limit! Consider slowing down.")
@@ -143,7 +143,7 @@ class CompliantRedditDataPuller:
     def make_request_with_monitoring(self, func, *args, **kwargs):
         """Make request with rate limit monitoring and error handling"""
         self.request_count += 1
-        
+
         try:
             result = func(*args, **kwargs)
             self.check_rate_limits()
@@ -525,7 +525,7 @@ class CompliantRedditDataPuller:
         """Log a summary of compliance metrics"""
         elapsed_time = time.time() - self.start_time
         requests_per_minute = (self.request_count / elapsed_time) * 60 if elapsed_time > 0 else 0
-        
+
         self.logger.info("="*50)
         self.logger.info("COMPLIANCE SUMMARY")
         self.logger.info("="*50)
@@ -533,7 +533,7 @@ class CompliantRedditDataPuller:
         self.logger.info(f"Rate Limit Errors: {self.stats['api_usage']['rate_limit_errors']}")
         self.logger.info(f"Average Requests/Minute: {requests_per_minute:.1f}")
         self.logger.info(f"Total Execution Time: {elapsed_time:.1f} seconds")
-        
+
         if requests_per_minute > 80:
             self.logger.warning("⚠️  High request rate detected - consider slowing down")
         elif self.stats['api_usage']['rate_limit_errors'] > 0:
@@ -554,4 +554,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

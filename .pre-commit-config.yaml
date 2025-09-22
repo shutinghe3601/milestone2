@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: require-settings
+        name: Require configs/pull_config.yml
+        entry: bash -c 'test -f configs/pull_config.yml'
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

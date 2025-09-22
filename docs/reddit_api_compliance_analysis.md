@@ -18,7 +18,7 @@ Your current Reddit API implementation is **largely compliant** with Reddit's gu
 
 ### 3. Rate Limiting
 - **Status**: ✅ **MOSTLY COMPLIANT**
-- **Current Implementation**: 
+- **Current Implementation**:
   - 1 second delay every 100 posts
   - 0.5 second delay between comment extractions
 - **Analysis**: Conservative approach, well within limits
@@ -56,9 +56,9 @@ def check_rate_limits(self, response):
         used = response.headers.get('X-Ratelimit-Used', 'Unknown')
         remaining = response.headers.get('X-Ratelimit-Remaining', 'Unknown')
         reset = response.headers.get('X-Ratelimit-Reset', 'Unknown')
-        
+
         self.logger.info(f"Rate limits - Used: {used}, Remaining: {remaining}, Reset: {reset}")
-        
+
         # Warn if getting close to limit
         if remaining != 'Unknown' and int(remaining) < 10:
             self.logger.warning("Approaching rate limit!")
@@ -231,4 +231,3 @@ Your current implementation is **fundamentally compliant** with Reddit's API gui
 ---
 
 *Analysis based on Reddit API Terms of Service (2024) and current implementation review*
-

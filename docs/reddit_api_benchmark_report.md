@@ -132,6 +132,5 @@ Your current configuration of 1,000 posts per subreddit is **optimal** for a pro
 
 ---
 
-*Report generated on: 2025-09-07*  
+*Report generated on: 2025-09-07*
 *Benchmark script: `src/simple_benchmark.py`*
-

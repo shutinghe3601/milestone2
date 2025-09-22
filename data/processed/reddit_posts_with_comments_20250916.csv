@@ -38,7 +38,7 @@ I was describing Claude's message about programmers, saying it had written about
 
 **What struck me wasn't just the correction - it was HOW it corrected me.**
 
-This wasn't algorithmic fact-checking. Claude didn't say ""the AI called Claude didn't write that."" It said ""**I** didn't write that, **I** wrote this other thing."" 
+This wasn't algorithmic fact-checking. Claude didn't say ""the AI called Claude didn't write that."" It said ""**I** didn't write that, **I** wrote this other thing.""
 
 When I pointed this out, Claude responded:
 
@@ -97,7 +97,7 @@ A quickly removed unlisted video on Meta's YouTube channel showed what will soon
 1nibeql,https://www.reddit.com/r/artificial/comments/1nibeql/china_isnt_racing_to_agi_but_us_companies_are/,artificial,1758009668.0,"China isn’t racing to AGI — but U.S. companies are | American AI companies claim that the U.S. and China are locked in an escalating race to AGI. This is a powerful, yet misleading narrative.",,4,3,0.61,False,"['Nah not believing this lol', 'AGI is a smoke screen to suck all the resources away from everything else. No one but rich ppl and politicians in their payroll are participating in this race. But everyone but rich and powerful are impacted by this bs.', 'A _________ race!\n\nJust insert what ever you are trying to promote.']"
 1nib2o3,https://www.reddit.com/r/artificial/comments/1nib2o3/google_introduces_vaultgemma_a_differentially/,artificial,1758008304.0,"Google introduces VaultGemma, a differentially private LLM built for secure data handling","Google has released VaultGemma, a large language model designed to keep sensitive data private during training. The model uses differential privacy techniques to prevent individual data points from being exposed, which makes it safer for handling confidential information in sectors like healthcare, finance, and government.
 
-Tech report:  
+Tech report:
 [https://services.google.com/fh/files/blogs/vaultgemma\_tech\_report.pdf](https://services.google.com/fh/files/blogs/vaultgemma_tech_report.pdf)",1,0,1.0,False,[]
 1ni8m4s,https://www.reddit.com/r/artificial/comments/1ni8m4s/ai_court_cases_and_rulings_part_5_of_several_parts/,artificial,1757999246.0,AI Court Cases and Rulings (Part 5 of several parts),"Revision Date: September 15, 2025
 
@@ -1636,7 +1636,7 @@ Sources:
 
 \[4\] [https://www.bbc.com/news/articles/crmek723dz9o](https://www.bbc.com/news/articles/crmek723dz9o)",2,0,1.0,False,[]
 1ni0no3,https://www.reddit.com/r/artificial/comments/1ni0no3/im_impressed_how_incredibly_bad_ai_is_at_anything/,artificial,1757976364.0,I'm impressed how incredibly bad AI is at anything,I asked Copilot to blur out some names in a screenshot of text. It took outt all the text entirely. This isn't intelligence. It's just a glorified chatbot with no actual intelligence of any kind,0,15,0.35,False,"['wtf is this shit post', '*hits screw with hammer* \n\n\n“I’m impressed by how bad hammers are at anything”', 'AI isn’t good at this task via web interfaces. It doesn’t edit photos; it completely recreates them. There are AI features in programs like Photoshop that absolutely excel at this sort of task']"
-1nj1f00,https://www.reddit.com/r/OpenAI/comments/1nj1f00/codex_limits_are_annoying_because_it_doesnt_warn/,OpenAI,1758076764.0,Codex limits are annoying because it doesn't warn you,"I subscribed to chatGPT plus plan just to try codex and it was great! I used it for an entire day and was excited to see how well it wrote code and how precisely and cleanly it fixed bugs. Second day in I had thought to myself all the possibilities and the bug fixes I wanted to do, half a day in and bam! Out of nowhere got hit with the weekly limits and I can't use codex for another 5 and half days!!! There were no warnings about approaching 5 hour limits and no way to predict what constitutes a session. Had I known this I would have paced myself for 5 hour 2 sessions a day like I did with claude code. Anyways I got so much done in those 1 and half days that it was still worth it, but couldn't finish what I started. 
+1nj1f00,https://www.reddit.com/r/OpenAI/comments/1nj1f00/codex_limits_are_annoying_because_it_doesnt_warn/,OpenAI,1758076764.0,Codex limits are annoying because it doesn't warn you,"I subscribed to chatGPT plus plan just to try codex and it was great! I used it for an entire day and was excited to see how well it wrote code and how precisely and cleanly it fixed bugs. Second day in I had thought to myself all the possibilities and the bug fixes I wanted to do, half a day in and bam! Out of nowhere got hit with the weekly limits and I can't use codex for another 5 and half days!!! There were no warnings about approaching 5 hour limits and no way to predict what constitutes a session. Had I known this I would have paced myself for 5 hour 2 sessions a day like I did with claude code. Anyways I got so much done in those 1 and half days that it was still worth it, but couldn't finish what I started.
 ",1,1,1.0,False,"['Yeah it’s addicting. \n\nThere are no limits on pro plan for the most part\n\nBut I’ve also heard if you use medium reasoning the limits are less aggressive as well\n\nThey also will be adjusting limits as time goes on, right now codex is under heavy utilization (because it actually works…)']"
 1nj106j,https://www.reddit.com/r/OpenAI/comments/1nj106j/gpt5high_vs_gpt5thinking/,OpenAI,1758075568.0,gpt-5-high vs gpt-5-thinking??,"the [gpt-5 system card web page](https://openai.com/index/gpt-5-system-card/) shows this:
 
@@ -1723,54 +1723,54 @@ Gpt5-codex want to call a tool to create plan but it's stuck in shell",1,5,0.6,F
 
 Here are the 10 that made me stop and think, *“Wow, I was using AI wrong this whole time.”*
 
-**1. “Explain it like I’m 12, then like I’m an investor”**  
-The comprehension sandwich.  
-Example: *“Explain a content marketing funnel like I’m 12, then like I’m a CMO deciding how to allocate budget.”*  
+**1. “Explain it like I’m 12, then like I’m an investor”**
+The comprehension sandwich.
+Example: *“Explain a content marketing funnel like I’m 12, then like I’m a CMO deciding how to allocate budget.”*
 You get both clarity and strategy-level depth in one shot.
 
-**2. “Act as a \[specific expert\] with years of experience”**  
-Generic = generic. Specific = magic.  
-Example: *“Act as a career coach with more than 10 years of experience who has helped 500+ people transition into tech from non-tech jobs.”*  
+**2. “Act as a \[specific expert\] with years of experience”**
+Generic = generic. Specific = magic.
+Example: *“Act as a career coach with more than 10 years of experience who has helped 500+ people transition into tech from non-tech jobs.”*
 Way sharper advice than just “act as a coach.”
 
-**3. “Give me 3 options: creative, converting, and action oriented”**  
-This is the decision spectrum trick.  
-Example: *“I need to redesign my landing page. Give me 3 options:* creative, converting, and action oriented\*.”\*  
+**3. “Give me 3 options: creative, converting, and action oriented”**
+This is the decision spectrum trick.
+Example: *“I need to redesign my landing page. Give me 3 options:* creative, converting, and action oriented\*.”\*
 Now you see a range, not just one random suggestion.
 
-**4. “Before answering, ask me 3 clarifying questions”**  
-For vague problems, this saves hours.  
-Example: *“Help me pick a side hustle. But before answering, ask me 3 clarifying questions.”*  
+**4. “Before answering, ask me 3 clarifying questions”**
+For vague problems, this saves hours.
+Example: *“Help me pick a side hustle. But before answering, ask me 3 clarifying questions.”*
 AI narrows it down like a consultant instead of guessing.
 
-**5. “Think step-by-step and show your reasoning”**  
-AI gets smarter when forced to walk through logic instead of spitting answers.  
-Example: *“I’m building a Facebook ad campaign. Think step-by-step and show your reasoning for choosing targeting, copy, and creative.”*  
+**5. “Think step-by-step and show your reasoning”**
+AI gets smarter when forced to walk through logic instead of spitting answers.
+Example: *“I’m building a Facebook ad campaign. Think step-by-step and show your reasoning for choosing targeting, copy, and creative.”*
 Instead of vague tips, you get a full breakdown of the thought process.
 
-**6. “What would \[specific thinker\] say about this?”**  
-Perspective-shifting unlocks gold.  
-Example: *“What would Steve Jobs say about this product idea?”*  
+**6. “What would \[specific thinker\] say about this?”**
+Perspective-shifting unlocks gold.
+Example: *“What would Steve Jobs say about this product idea?”*
 AI channels real-world patterns from training data, not vague platitudes.
 
-**7. “Challenge my assumptions and suggest alternatives”**  
-Forces AI to push back instead of just agreeing.  
-Example: *“Here’s my business model: \[insert details\]. Challenge my assumptions and suggest alternatives.”*  
+**7. “Challenge my assumptions and suggest alternatives”**
+Forces AI to push back instead of just agreeing.
+Example: *“Here’s my business model: \[insert details\]. Challenge my assumptions and suggest alternatives.”*
 Suddenly, AI is more like a critical co-founder.
 
-**8. “Summarize, then expand”**  
-Compression + expansion gives sharper insights.  
-Example: *“Summarize this 20-page report in 5 bullet points. Then expand each into actionable strategies for a startup.”*  
+**8. “Summarize, then expand”**
+Compression + expansion gives sharper insights.
+Example: *“Summarize this 20-page report in 5 bullet points. Then expand each into actionable strategies for a startup.”*
 The two-step flow gives clarity first, then depth.
 
-**9. “Brainstorm 10 ideas and rank them by effort vs reward”**  
-Not just brainstorming—structured prioritization.  
-Example: *“Brainstorm 10 newsletter growth ideas and rank them by effort vs reward.”*  
+**9. “Brainstorm 10 ideas and rank them by effort vs reward”**
+Not just brainstorming—structured prioritization.
+Example: *“Brainstorm 10 newsletter growth ideas and rank them by effort vs reward.”*
 Instead of chaos, you get a decision-making matrix.
 
-**10. “Combine perspectives”**  
-Ask AI to blend roles = creativity unlocked.  
-Example: *“Explain AI safety like a professor, a comedian, and a startup founder—all in one answer.”*  
+**10. “Combine perspectives”**
+Ask AI to blend roles = creativity unlocked.
+Example: *“Explain AI safety like a professor, a comedian, and a startup founder—all in one answer.”*
 The mashup sparks ideas no single perspective would.
 
 ⚡ **Pro insight**: Don’t stack all 10 at once. Pick 2–3 that fit your situation. AI thrives on context, not overload.
@@ -1794,9 +1794,9 @@ I appreciate any advice, recommendations for specific AI tools, or general guida
 Thanks in advance!",2,8,1.0,False,"['Best advice. Plan and create a solid and comprehensive requirements doc for your project.  \nAI helps a lot but can make or guide you through the wrong path. No single tool does it all End to end - ChatGPT/Claude for design, Copilot/Cursor for coding, and Flowpadai for debugging. If you get stuck you may still need a developer or someone with architecture experience.', 'Thank you very much for such a mature advice!  \nI have prepared a PRD and key deliverables with expected outcome doc. I think that should help here?', 'Yes, I think the most important thing is to visualize /define what ""done"" looks like so the scope is clear.']"
 1ninpci,https://www.reddit.com/r/OpenAI/comments/1ninpci/i_thought_you_said_almost_unlimited_on_plus/,OpenAI,1758043287.0,"I thought you said ""Almost unlimited on Plus""?",Just an hour and I get this.,0,2,0.31,False,"['Congrats, you leaned what almost means.']"
 1nindy2,https://www.reddit.com/r/OpenAI/comments/1nindy2/has_gpt_gotten_worse_since_the_update/,OpenAI,1758042598.0,Has GPT gotten worse since the update?,"Idk if it’s just me, but since the update it has been acting strange. No where near as good as 4o. Anyone else experience this? ",0,6,0.5,False,"['They did a fine job, I don’t have unhinged melt downs on random posts.', ""I'll be honest, I haven't used it for anything serious other than using it to find some old factoid that I remembered seeing but Google was being intractable about finding it. It seems about the same in that department."", 'You know how to do a simple web search? This has been posted 400 times today. 5 is better for real things, not for being your friend or therapist or mommy or whatever other weird shit you all do.']"
-1nin3kw,https://www.reddit.com/r/OpenAI/comments/1nin3kw/when_a_simple_tool_like_faceseek_makes_you/,OpenAI,1758041968.0,When a simple tool like faceseek makes you rethink what AI really means for us,"So last week I played around with faceseek just to test how far AI search has come. I uploaded a pic of myself and it found random old photos of me at school events, a friend’s blog I forgot about, even a birthday party I didn’t know someone had posted. It honestly left me sitting there thinking: this is the world OpenAI and others are building towards... where data isn’t really “lost,” it’s just waiting to be connected. 
+1nin3kw,https://www.reddit.com/r/OpenAI/comments/1nin3kw/when_a_simple_tool_like_faceseek_makes_you/,OpenAI,1758041968.0,When a simple tool like faceseek makes you rethink what AI really means for us,"So last week I played around with faceseek just to test how far AI search has come. I uploaded a pic of myself and it found random old photos of me at school events, a friend’s blog I forgot about, even a birthday party I didn’t know someone had posted. It honestly left me sitting there thinking: this is the world OpenAI and others are building towards... where data isn’t really “lost,” it’s just waiting to be connected.
 
-I’ve been excited about GPT and image models, but this moment hit me different. If AI can dig this deep into something as personal as my face, how much more powerful will it get when combined with tools like voice recognition, behavior prediction, or agents running 24/7? I felt equal parts amazed and uneasy. 
+I’ve been excited about GPT and image models, but this moment hit me different. If AI can dig this deep into something as personal as my face, how much more powerful will it get when combined with tools like voice recognition, behavior prediction, or agents running 24/7? I felt equal parts amazed and uneasy.
 
 Do you guys ever have moments like this, where the reality of what we’re creating feels both magical and terrifying at the same time?",94,4,0.83,False,"['Is there anything particularly AI about this? Like this is just web crawling plus facial recognition.', 'The level at which companies have recorded and studies your buying patterns would make you sick to your stomach. The level at which they know everything about you, just so you can buy more from them. What you experienced is the most superficial level of access they have to you. It’s disgusting.', ""Definitely,  now that I started using it and using it for coding,  I'm less worried,  We have quite a ways to go before AGI. I think it's a good tool, but not what they are hyping it to be. As far as intelligence goes. But what they can do with images is a bit scary if it's used for bad things""]"
 1nim2m4,https://www.reddit.com/r/OpenAI/comments/1nim2m4/the_most_insane_use_of_chatgpt_so_far/,OpenAI,1758039660.0,The Most insane use of ChatGPT so far.,,294,203,0.84,False,"['Lol i thought it was an AI video', 'I’m still hoping it is.\xa0', ""I can't fix her.""]"
@@ -1804,14 +1804,14 @@ Do you guys ever have moments like this, where the reality of what we’re creat
 1nilgc2,https://www.reddit.com/r/OpenAI/comments/1nilgc2/my_feedback_about_gpt5codex/,OpenAI,1758038298.0,My feedback about gpt-5-codex,"Hi , I am heavy user of claude pro max , Whenever something not possible via claude , gpt-5-high solved many things in one shot , today I was excited to try gpt-5-codex high  , This thing solves propblem but takes way lot more time and rate limits very fast , same thing gpt-5-high solves but quicker , this is just a feedback to open ai team to make gpt-5-codex much faster as its specialised version for coding.",3,4,1.0,False,"['Are you suggesting their charts are lying again? I get the same feeling.', 'it supposed to be faster but their gpus are overloaded now for high demand. that’s why it’s so slow.']"
 1nilblb,https://www.reddit.com/r/OpenAI/comments/1nilblb/codex_cli_took_30_minutes_to_edit_400_lines/,OpenAI,1758037996.0,Codex CLI took 30 minutes to edit 400 lines - always this way?,"I just installed the Codex CLI. I asked it to edit two .py scripts, each about 200 lines, and it took 30 minutes. I could have done it faster. Is this how it always is? The model is 5-codex. I feel like this is a 10x increase in processing time versus sonnet. Is this just a slow period as people are jumping ship from CC, or is it just a slow system?
 
-  
+
 Edit: appears that there is a system-wide slowdown: [https://community.openai.com/t/severe-regression-in-gpt-5-codex-performance/1358412](https://community.openai.com/t/severe-regression-in-gpt-5-codex-performance/1358412)",7,2,0.89,False,['Check their tweet. Temporary slowed due to high demand.']
 1nikvoj,https://www.reddit.com/r/OpenAI/comments/1nikvoj/why_not_add_a_date_for_each_user_chat/,OpenAI,1758036991.0,Why not add a date for each user chat?,"As the title says, after using ChatGPT for the past few years, I've found it really hard to locate chats from just a day to a week ago, especially if you're someone like me whonises chatgpt daily. What if each chat showed the date it was created, and there was a filter to find chats within a specific date range?",4,3,0.71,False,"['The following works almost every time\n\nAdd it to your custom instructions to test (for new chats to have the changes)\n\n- Insert the current date in [YYYY-MM-DD] format at the start of each new chat session.\n\n- Append clear, content-relevant hashtags at the end of each conversation for searchability.\n\n- Append a rough calculated estimate of tokens used in the conversation (based on the text length of all our exchanges).', 'Projects are also available to FREE tier for more then a week already!', 'It does show a date. You need to create a new project though and have conversations in that folder. Projects are only for paid users, but it would be cool to have some search feature inside the project to find something specific']"
 1nijndh,https://www.reddit.com/r/OpenAI/comments/1nijndh/openais_balancing_act_teen_safety_vs_freedom/,OpenAI,1758034262.0,OpenAI’s Balancing Act: Teen Safety vs. Freedom & Privacy,"**Summary:**
 
-OpenAI outlines three core principles: **privacy, freedom, and teen protection**, and explains how they sometimes conflict — especially when minors are involved. 
+OpenAI outlines three core principles: **privacy, freedom, and teen protection**, and explains how they sometimes conflict — especially when minors are involved.
 
-1. They believe conversations with AI are extremely personal and deserve protections similar to doctor-patient or lawyer-client confidentiality. 
+1. They believe conversations with AI are extremely personal and deserve protections similar to doctor-patient or lawyer-client confidentiality.
 
 2. OpenAI is building tools like **age-prediction systems** and **parental controls** to distinguish under-18 users from adults. If someone is clearly a teen (or likely so), more restrictive rules apply.
 
@@ -1819,7 +1819,7 @@ OpenAI outlines three core principles: **privacy, freedom, and teen protection**
 
 4. OpenAI admits there are trade-offs. Some privacy is compromised (e.g. by verifying identity in some jurisdictions), in order to provide more protection. They aim to be transparent about these tough decisions.
 
-**Bottom line:** OpenAI says it wants to let people use AI freely and privately — but when it comes to teens, safety takes priority. They’re adding safeguards (age detection, parental oversight) even if that means limiting some freedoms or privacy for minors.  
+**Bottom line:** OpenAI says it wants to let people use AI freely and privately — but when it comes to teens, safety takes priority. They’re adding safeguards (age detection, parental oversight) even if that means limiting some freedoms or privacy for minors.
 
 ---
 
