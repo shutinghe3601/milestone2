@@ -3,6 +3,8 @@
 !data/raw/README.md
 data/interim/*
 # *.jsonl
+data/raw/NRC_EmoLex_NRC-VAD-Lexicon.txt
+data/processed/reddit_submission.csv
 
 # Keep external data directory structure but ignore large files
 /data/external/*.txt
