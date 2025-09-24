@@ -237,6 +237,16 @@ def label_text(
     lemmatize: bool = True,
     negation_window: int = 3,
     intensifier_weight: float = 1.5,
+    # Debug parameters
+    verbose: bool = False,
+    return_intermediate: bool = False,
+    show_stats: bool = False,
+    word_emotion_mapping: bool = False,
+    matched_words_only: bool = False,
+    expand_contractions: bool = False,
+    remove_urls: bool = False,
+    custom_emotions: Optional[List[str]] = None,
+    custom_weights: Optional[Dict[str, float]] = None,
 ) -> Dict:
     """
     Label text with emotion counts and anxiety scores.
@@ -251,20 +261,108 @@ def label_text(
         negation_window: Number of tokens affected by negation
         intensifier_weight: Multiplier for intensified emotions
 
+        # Debug parameters:
+        verbose: Print detailed processing information
+        return_intermediate: Return intermediate processing results
+        show_stats: Show emotion matching statistics
+        word_emotion_mapping: Return mapping of words to emotions
+        matched_words_only: Only show words that matched emotions
+        expand_contractions: Expand contractions (don't -> do not)
+        remove_urls: Remove URL patterns from text
+        custom_emotions: Override default emotions list
+        custom_weights: Override default weights
+
     Returns:
         Dictionary with n_tokens, emo_counts, anxiety_score_raw, anxiety_score_norm
+        Additional debug info if debug parameters are enabled
     """
-    if emotions is None:
+    # Handle custom overrides for debugging
+    if custom_emotions is not None:
+        emotions = custom_emotions.copy()
+    elif emotions is None:
         emotions = DEFAULT_EMOTIONS.copy()
-    if weights is None:
+
+    if custom_weights is not None:
+        weights = custom_weights.copy()
+    elif weights is None:
         weights = DEFAULT_WEIGHTS.copy()
+
+    # Initialize debug info
+    debug_info = {}
+
+    if verbose:
+        print(f"Processing text: '{text[:100]}{'...' if len(text) > 100 else ''}'")
+        print(f"Using emotions: {emotions}")
+        print(f"Using weights: {weights}")
 
     # Load lexicon
     lexicon = load_lexicon(lexicon_path, emotions)
 
+    if verbose:
+        for emotion in emotions:
+            print(f"Loaded {len(lexicon.get(emotion, set()))} words for {emotion}")
+
+    # Enhanced text preprocessing
+    processed_text = text
+
+    # Apply additional preprocessing if requested
+    if expand_contractions:
+        contractions = {
+            "don't": "do not",
+            "can't": "cannot",
+            "won't": "will not",
+            "isn't": "is not",
+            "aren't": "are not",
+            "wasn't": "was not",
+            "weren't": "were not",
+            "haven't": "have not",
+            "hasn't": "has not",
+            "hadn't": "had not",
+            "wouldn't": "would not",
+            "shouldn't": "should not",
+            "couldn't": "could not",
+            "i'm": "i am",
+            "you're": "you are",
+            "it's": "it is",
+            "that's": "that is",
+            "we're": "we are",
+            "they're": "they are",
+            "i've": "i have",
+            "you've": "you have",
+            "we've": "we have",
+            "they've": "they have",
+            "i'll": "i will",
+            "you'll": "you will",
+            "he'll": "he will",
+            "she'll": "she will",
+            "we'll": "we will",
+            "they'll": "they will",
+        }
+        for contraction, expansion in contractions.items():
+            processed_text = processed_text.replace(contraction, expansion)
+
+    if remove_urls:
+        import re
+
+        # Remove common URL patterns
+        url_pattern = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+        processed_text = re.sub(url_pattern, "", processed_text)
+
+    if verbose and processed_text != text:
+        print(
+            f"Text after preprocessing: '{processed_text[:100]}{'...' if len(processed_text) > 100 else ''}'"
+        )
+
     # Preprocess text
-    tokens = preprocess_text(text, lowercase, lemmatize)
+    tokens = preprocess_text(processed_text, lowercase, lemmatize)
     n_tokens = len(tokens)
+
+    if verbose:
+        print(f"Tokens ({n_tokens}): {tokens}")
+
+    debug_info["original_text"] = text
+    debug_info["processed_text"] = processed_text
+    debug_info["tokens"] = tokens
 
     if n_tokens == 0:
         return {
@@ -276,18 +374,40 @@ def label_text(
 
     # Find emotion matches
     emotion_matches = {}
+    word_emotions = {}  # For debugging: word -> emotions
+    matched_words = set()  # For debugging: words that matched
+
     for i, token in enumerate(tokens):
         matched_emotions = []
         for emotion in emotions:
             if token in lexicon[emotion]:
                 matched_emotions.append(emotion)
+                matched_words.add(token)
         if matched_emotions:
             emotion_matches[i] = matched_emotions
+            word_emotions[token] = matched_emotions
+
+    if verbose:
+        print(f"Found {len(emotion_matches)} tokens with emotion matches")
+        if emotion_matches:
+            print(
+                "Emotion matches:",
+                {tokens[i]: emos for i, emos in emotion_matches.items()},
+            )
+
+    debug_info["emotion_matches"] = emotion_matches
+    debug_info["word_emotions"] = word_emotions
+    debug_info["matched_words"] = list(matched_words)
 
     # Apply negation and intensifier rules
     emotion_scores = apply_negation_intensifier(
         tokens, emotion_matches, negation_window, intensifier_weight
     )
+
+    if verbose:
+        print(f"Emotion scores after negation/intensifier: {emotion_scores}")
+
+    debug_info["emotion_scores_raw"] = emotion_scores.copy()
 
     # Convert to integer counts and compute anxiety score
     emo_counts = {}
@@ -306,12 +426,47 @@ def label_text(
     # Normalize anxiety score
     anxiety_score_norm = anxiety_score_raw / (max(1, n_tokens) ** 0.7)
 
-    return {
+    if verbose:
+        print(f"Final emotion counts: {emo_counts}")
+        print(f"Anxiety score (raw): {anxiety_score_raw:.3f}")
+        print(f"Anxiety score (normalized): {anxiety_score_norm:.3f}")
+
+    # Build result dictionary
+    result = {
         "n_tokens": n_tokens,
         "emo_counts": emo_counts,
         "anxiety_score_raw": anxiety_score_raw,
         "anxiety_score_norm": anxiety_score_norm,
     }
+
+    # Add debug information if requested
+    if return_intermediate:
+        result["debug_info"] = debug_info
+
+    if word_emotion_mapping and not return_intermediate:
+        result["word_emotions"] = word_emotions
+
+    if matched_words_only and not return_intermediate:
+        result["matched_words"] = list(matched_words)
+
+    if show_stats:
+        stats = {
+            "total_words": n_tokens,
+            "matched_words": len(matched_words),
+            "match_rate": len(matched_words) / max(1, n_tokens),
+            "emotions_found": [emo for emo in emotions if emo_counts.get(emo, 0) > 0],
+            "top_emotions": sorted(
+                [(emo, count) for emo, count in emo_counts.items() if count > 0],
+                key=lambda x: x[1],
+                reverse=True,
+            )[:3],
+        }
+        if return_intermediate:
+            debug_info["stats"] = stats
+        else:
+            result["stats"] = stats
+
+    return result
 
 
 def get_anxiety_label_threshold(anxiety_score_norm: float) -> int:
@@ -372,24 +527,38 @@ if __name__ == "__main__":
     print(f"Result: {result}")
     print(f"Anxiety label: {anxiety_label}")
 
-    # Example 2: Custom emotions
+    # Example 2: Debug mode with verbose output
+    print(f"\nExample 2: Debug mode")
+    text2 = "I'm extremely scared and can't stop worrying."
+    result2 = label_text(text2, verbose=True, expand_contractions=True, show_stats=True)
+    print(
+        f"Anxiety label: {get_anxiety_label_threshold(result2['anxiety_score_norm'])}"
+    )
+
+    # Example 3: Custom emotions and weights
     custom_emotions = ["fear", "sadness", "joy"]
-    result2 = label_text(text, emotions=custom_emotions)
+    custom_weights = {"fear": 2.0, "sadness": 1.5, "joy": -1.0}
 
-    print(f"\nExample 2: Custom emotions {custom_emotions}")
-    print(f"Text: {text}")
-    print(f"Emotion counts: {result2['emo_counts']}")
-    print(f"Anxiety score: {result2['anxiety_score_norm']:.3f}")
+    print(f"\nExample 3: Custom emotions {custom_emotions}")
+    text3 = "I feel scared and sad but also a bit happy."
+    result3 = label_text(
+        text3,
+        custom_emotions=custom_emotions,
+        custom_weights=custom_weights,
+        show_stats=True,
+    )
+    print(f"Text: {text3}")
+    print(f"Emotion counts: {result3['emo_counts']}")
+    print(f"Anxiety score: {result3['anxiety_score_norm']:.3f}")
+    print(f"Statistics: {result3.get('stats', {})}")
 
-    # Example 3: Batch processing
-    texts = [
-        "I love this sunny day!",
-        "I'm terrified of spiders.",
-        "This is just a normal day.",
-    ]
+    # Example 4: Word-level analysis
+    print(f"\nExample 4: Word-level analysis")
+    text4 = "Happy thoughts mixed with anxious feelings."
+    result4 = label_text(text4, word_emotion_mapping=True, matched_words_only=True)
+    print(f"Text: {text4}")
+    print(f"Word emotions: {result4.get('word_emotions', {})}")
+    print(f"Matched words: {result4.get('matched_words', [])}")
 
-    print(f"\nExample 3: Batch processing")
-    for i, t in enumerate(texts):
-        res = label_text(t)
-        label = get_anxiety_label_threshold(res["anxiety_score_norm"])
-        print(f"Text {i+1}: anxiety={res['anxiety_score_norm']:.3f}, label={label}")
+    print(f"\n💡 For more comprehensive debug examples, run:")
+    print(f"   python examples/debug_examples.py")
