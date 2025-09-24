@@ -23,6 +23,7 @@ try:
         try:
             nltk.download("wordnet", quiet=True)
             nltk.download("omw-1.4", quiet=True)
+
             print("NLTK data downloaded successfully")
         except:
             print("Failed to download NLTK data, using simple normalization")
@@ -74,41 +75,40 @@ INTENSIFIER_WORDS = {
 }
 
 
-def load_lexicon(lexicon_dir: str, emotions: List[str]) -> Dict[str, Set[str]]:
+def load_lexicon(lexicon_path: str, emotions: List[str]) -> Dict[str, Set[str]]:
     """
-    Load NRC emotion lexicon files from directory.
+    Load NRC emotion lexicon from a single file.
 
     Args:
-        lexicon_dir: Path to directory containing emotion lexicon files
+        lexicon_path: Path to the NRC emotion lexicon file
         emotions: List of emotions to load
 
     Returns:
         Dictionary mapping emotion -> set of words
     """
-    lexicon = {}
-    lexicon_path = Path(lexicon_dir)
+    lexicon = {emotion: set() for emotion in emotions}
 
-    for emotion in emotions:
-        file_path = lexicon_path / f"{emotion}-NRC-Emotion-Lexicon.txt"
-        if file_path.exists():
-            words = set()
-            with open(file_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if line and "\t" in line:
-                        parts = line.split("\t")
-                        if len(parts) >= 2:
-                            word = parts[0].strip()
-                            score = parts[1].strip()
-                            # Only include words with score 1 (associated with this emotion)
-                            if word and score == "1":
-                                words.add(word.lower())
-            lexicon[emotion] = words
-        else:
-            print(
-                f"Warning: Lexicon file not found for emotion '{emotion}': {file_path}"
-            )
-            lexicon[emotion] = set()
+    file_path = Path(lexicon_path)
+    if not file_path.exists():
+        print(f"Warning: Lexicon file not found: {lexicon_path}")
+        return lexicon
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and "\t" in line:
+                    parts = line.split("\t")
+                    if len(parts) >= 3:
+                        word = parts[0].strip()
+                        emotion = parts[1].strip()
+                        score = parts[2].strip()
+
+                        # Only include words with score 1 and if emotion is in our list
+                        if word and emotion in emotions and score == "1":
+                            lexicon[emotion].add(word.lower())
+    except Exception as e:
+        print(f"Error reading lexicon file {lexicon_path}: {e}")
 
     return lexicon
 
@@ -231,7 +231,7 @@ def apply_negation_intensifier(
 def label_text(
     text: str,
     emotions: Optional[List[str]] = None,
-    lexicon_dir: str = "./data/emotion_lexicon",
+    lexicon_path: str = "./data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt",
     weights: Optional[Dict[str, float]] = None,
     lowercase: bool = True,
     lemmatize: bool = True,
@@ -244,7 +244,7 @@ def label_text(
     Args:
         text: Input text to analyze
         emotions: List of emotions to analyze (defaults to DEFAULT_EMOTIONS)
-        lexicon_dir: Directory containing NRC emotion lexicon files
+        lexicon_path: Path to the NRC emotion lexicon file
         weights: Emotion weights for anxiety scoring (defaults to DEFAULT_WEIGHTS)
         lowercase: Whether to convert text to lowercase
         lemmatize: Whether to lemmatize words
@@ -260,7 +260,7 @@ def label_text(
         weights = DEFAULT_WEIGHTS.copy()
 
     # Load lexicon
-    lexicon = load_lexicon(lexicon_dir, emotions)
+    lexicon = load_lexicon(lexicon_path, emotions)
 
     # Preprocess text
     tokens = preprocess_text(text, lowercase, lemmatize)
@@ -325,7 +325,7 @@ def get_anxiety_label_threshold(anxiety_score_norm: float) -> int:
     return 5  # fallback
 
 
-def run_demo(lexicon_dir: str = "./data/emotion_lexicon"):
+def run_demo(lexicon_path: str = "./data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
     """
     Run demo with built-in sample texts.
     """
@@ -342,7 +342,7 @@ def run_demo(lexicon_dir: str = "./data/emotion_lexicon"):
 
     for i, text in enumerate(demo_texts, 1):
         print(f"\nExample {i}: {text}")
-        result = label_text(text, lexicon_dir=lexicon_dir)
+        result = label_text(text, lexicon_path=lexicon_path)
         anxiety_label = get_anxiety_label_threshold(result["anxiety_score_norm"])
 
         print(f"Tokens: {result['n_tokens']}")
