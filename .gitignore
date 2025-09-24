@@ -3,6 +3,10 @@
 !data/raw/README.md
 data/interim/*
 # *.jsonl
+data/raw/NRC_EmoLex_NRC-VAD-Lexicon.txt
+data/processed/reddit_submission.csv
+data/raw/posts_with_comments_20250916.jsonl
+data/raw/execution_log_20250916.md
 
 # Keep external data directory structure but ignore large files
 /data/external/*.txt
@@ -37,8 +41,9 @@ secret.env
 .DS_Store
 Thumbs.db
 
-# Jupyter notebook checkpoints
+# Jupyter notebook and checkpoints
 .ipynb_checkpoints/
+notebooks/text_process_v2.ipynb
 
 # Logs
 *.log
