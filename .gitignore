@@ -1,8 +1,8 @@
 # Data files
-data/raw/*
+# data/raw/*
 !data/raw/README.md
 data/interim/*
-*.jsonl
+# *.jsonl
 
 # Keep external data directory structure but ignore large files
 /data/external/*.txt
@@ -25,6 +25,7 @@ htmlcov/
 .venv
 env/
 venv/
+secret.env
 
 # IDE files
 .vscode/
@@ -42,4 +43,4 @@ Thumbs.db
 # Logs
 *.log
 logs/
-secret.env
+*.gitkeep

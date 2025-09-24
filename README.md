@@ -5,7 +5,7 @@
 
 ## Project Overview
 
-Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually and 31.1% facing one in their lifetime](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial. 
+Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually and 31.1% facing one in their lifetime](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial.
 
 TriggerLens combines unsupervised and supervised approaches to build an analytical lens that both identifies discussion themes and predicts 'trigger scores' for Reddit posts, aiming to develop a predictive framework for assessing anxiety trigger potential.
 
@@ -16,7 +16,7 @@ To develop a predictive framework that can assess the anxiety trigger potential 
 ## Team Members
 
 - **Maria McKay (MM)**
-- **Shen Shu (SS)** 
+- **Shen Shu (SS)**
 - **Shuting He (SH)**
 
 ## Project Structure
@@ -48,7 +48,7 @@ milestone2/
 
 ### Part A: Unsupervised Learning
 - **Dataset**: Reddit posts from mental health-related subreddits
-- **Approach**: 
+- **Approach**:
   - Non-negative Matrix Factorization (NMF) with TF-IDF features
   - BERTopic with sentence embeddings for semantic topic modeling
 - **Goal**: Identify interpretable discussion themes and rank topics by anxiety intensity
