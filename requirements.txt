@@ -23,7 +23,6 @@ threadpoolctl>=3.5
 # Visualization
 matplotlib>=3.5.0
 seaborn>=0.13.2
-wordcloud>=1.9.0
 
 # Jupyter notebooks
 jupyter>=1.0.0
