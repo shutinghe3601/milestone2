@@ -37,9 +37,10 @@ milestone2/
 │   ├── 01_quick_qc.ipynb     # Quick quality check
 │   └── 02_eda_weaklabels.ipynb # Exploratory data analysis
 ├── data/                      # Data storage
-│   ├── raw/                   # Raw Reddit data
+│   ├── raw/                   # Raw Reddit data and NRC lexicon
 │   ├── interim/               # Processed data
-│   └── external/              # External datasets (NRC lexicon)
+│   ├── emotion_lexicon/       # Legacy NRC emotion files (deprecated)
+│   └── external/              # External datasets
 ├── reports/                   # Analysis reports and visualizations
 └── docs/                      # Documentation
 ```
@@ -91,9 +92,15 @@ milestone2/
 python src/pull_reddit.py
 ```
 
-### Weak Labeling
+### Weak Labeling with NRC Emotion Lexicon
 ```bash
+# Run demo with default NRC lexicon file
 python src/weak_label_nrc.py
+
+# Use custom text labeling in Python
+from src.weak_label_nrc import label_text
+result = label_text("I feel anxious about tomorrow's exam.")
+print(result)
 ```
 
 ### Data Card Generation
@@ -104,9 +111,25 @@ python src/build_datacard.py
 ### Analysis
 Open and run the Jupyter notebooks in the `notebooks/` directory for exploratory data analysis.
 
+## NRC Emotion Lexicon Weak Labeling
+
+The `weak_label_nrc.py` module provides automated emotion detection and anxiety scoring using the NRC Emotion Lexicon.
+
+### Features
+- **10 Emotion Categories**: anger, anticipation, disgust, fear, joy, sadness, surprise, trust, negative, positive
+- **Anxiety Scoring**: Weighted combination of emotions with normalization
+- **Advanced Processing**: 
+  - NLTK lemmatization (optional)
+  - Negation detection ("not happy" → reduced positive score)
+  - Intensifier detection ("very scared" → amplified fear score)
+- **Ordinal Labels**: 1-5 scale anxiety classification
+
 ## External Datasets
 
-- **[NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)**: Word-level emotion associations for 10,170 words across 8 emotions and 2 sentiments
+- **[NRC Emotion Lexicon v0.92](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)**: Word-level emotion associations for 14,155+ words across 10 categories (8 emotions + positive/negative sentiment)
+  - **File**: `data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt`
+  - **Format**: Tab-separated values (word, emotion, score)
+  - **Usage**: Automated weak labeling for anxiety scoring
 - **[GoEmotions](https://research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/)**: 58,000 labeled Reddit comments with fine-grained emotions
 - **[Reddit API](https://www.reddit.com/dev/api/oauth/)**: Mental health-related subreddits data collection
 
