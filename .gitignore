@@ -3,7 +3,6 @@
 !data/raw/README.md
 data/interim/*
 # *.jsonl
-data/raw/NRC_EmoLex_NRC-VAD-Lexicon.txt
 data/processed/reddit_submission.csv
 data/raw/posts_with_comments_20250916.jsonl
 data/raw/execution_log_20250916.md
