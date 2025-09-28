@@ -5,6 +5,9 @@ This module provides helper functions for data loading, analysis, and visualizat
 to keep notebooks clean and functions reusable across different analyses.
 """
 
+# TODO
+#clean and document better
+
 import json
 import pandas as pd
 import numpy as np
