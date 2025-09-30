@@ -37,6 +37,8 @@ def expand_contractions(text: str) -> str:
     """
     Expand contractions in text (e.g., don't -> do not).
 
+    Handles both lowercase and capitalized contractions.
+
     Args:
         text: Input text
 
@@ -44,8 +46,19 @@ def expand_contractions(text: str) -> str:
         Text with contractions expanded
     """
     processed_text = text
+
+    # First handle lowercase contractions
     for contraction, expansion in CONTRACTIONS.items():
         processed_text = processed_text.replace(contraction, expansion)
+
+    # Then handle capitalized contractions (first letter uppercase)
+    for contraction, expansion in CONTRACTIONS.items():
+        capitalized_contraction = contraction.capitalize()
+        capitalized_expansion = expansion.capitalize()
+        processed_text = processed_text.replace(
+            capitalized_contraction, capitalized_expansion
+        )
+
     return processed_text
 
 
