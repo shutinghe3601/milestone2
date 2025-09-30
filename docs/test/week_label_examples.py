@@ -9,7 +9,9 @@ Run this file to see various debugging features in action.
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
+# Add the src directory to Python path
+src_path = os.path.join(os.path.dirname(__file__), "..", "..", "src")
+sys.path.append(src_path)
 
 from weak_label_nrc import get_anxiety_label_threshold, label_text
 
@@ -32,10 +34,54 @@ def basic_example():
     print()
 
 
+def scaling_modes_example():
+    """Demonstrate the three scaling modes: threshold, statistical, both"""
+    print("=" * 60)
+    print("2. SCALING MODES COMPARISON")
+    print("=" * 60)
+
+    text = "I'm extremely anxious and terrified about tomorrow's exam."
+    print(f"Text: {text}")
+    print()
+
+    # Mode 1: Threshold (default, 1-5 labels)
+    print("THRESHOLD MODE (1-5 labels):")
+    result1 = label_text(text, scaling_method="threshold")
+    print(f"   Raw score: {result1['anxiety_score_raw']:.3f}")
+    print(f"   Normalized: {result1['anxiety_score_norm']:.3f}")
+    print(f"   Label: {result1['anxiety_label']}")
+    print()
+
+    # Mode 2: Statistical (0-1 scores like text_process.ipynb)
+    print("STATISTICAL MODE (0-1 scores):")
+    result2 = label_text(text, scaling_method="statistical")
+    print(f"   Raw score: {result2['anxiety_score_raw']:.3f}")
+    print(f"   Statistical: {result2['anxiety_score_statistical']:.3f}")
+    print()
+
+    # Mode 3: Both modes
+    print("BOTH MODES:")
+    result3 = label_text(text, scaling_method="both")
+    print(f"   Raw score: {result3['anxiety_score_raw']:.3f}")
+    print(f"   Threshold label (1-5): {result3['anxiety_label']}")
+    print(f"   Statistical score (0-1): {result3['anxiety_score_statistical']:.3f}")
+    print()
+
+    # Mode 4: Custom statistical parameters
+    print("CUSTOM STATISTICAL PARAMETERS:")
+    custom_params = {"median": 1.0, "mad": 0.5}
+    result4 = label_text(
+        text, scaling_method="statistical", statistical_params=custom_params
+    )
+    print(f"   Custom params: {custom_params}")
+    print(f"   Statistical score: {result4['anxiety_score_statistical']:.3f}")
+    print()
+
+
 def verbose_example():
     """Demonstrate verbose output"""
     print("=" * 60)
-    print("2. VERBOSE MODE DEBUGGING")
+    print("3. VERBOSE MODE DEBUGGING")
     print("=" * 60)
 
     text = "I'm extremely anxious and scared about this situation."
@@ -46,7 +92,7 @@ def verbose_example():
 def comprehensive_debug():
     """Show all debug information"""
     print("=" * 60)
-    print("3. COMPREHENSIVE DEBUG INFORMATION")
+    print("4. COMPREHENSIVE DEBUG INFORMATION")
     print("=" * 60)
 
     text = "I don't feel happy, but I'm not completely sad either."
@@ -87,7 +133,7 @@ def comprehensive_debug():
 def custom_emotions_example():
     """Test custom emotions and weights"""
     print("=" * 60)
-    print("4. CUSTOM EMOTIONS AND WEIGHTS")
+    print("5. CUSTOM EMOTIONS AND WEIGHTS")
     print("=" * 60)
 
     text = "I feel very scared and sad about losing my job."
@@ -122,7 +168,7 @@ def custom_emotions_example():
 def text_preprocessing_example():
     """Test various text preprocessing options"""
     print("=" * 60)
-    print("5. TEXT PREPROCESSING OPTIONS")
+    print("6. TEXT PREPROCESSING OPTIONS")
     print("=" * 60)
 
     text = (
@@ -162,7 +208,7 @@ def text_preprocessing_example():
 def word_emotion_mapping_example():
     """Show word-to-emotion mapping"""
     print("=" * 60)
-    print("6. WORD-TO-EMOTION MAPPING")
+    print("7. WORD-TO-EMOTION MAPPING")
     print("=" * 60)
 
     text = "I feel angry, sad, happy, and surprised at the same time."
@@ -178,7 +224,7 @@ def word_emotion_mapping_example():
 def comparison_example():
     """Compare different parameter combinations"""
     print("=" * 60)
-    print("7. PARAMETER COMPARISON")
+    print("8. PARAMETER COMPARISON")
     print("=" * 60)
 
     text = "I'm extremely worried and can't stop feeling anxious."
@@ -230,7 +276,7 @@ def comparison_example():
 def performance_analysis_example():
     """Analyze performance with statistics"""
     print("=" * 60)
-    print("8. PERFORMANCE ANALYSIS")
+    print("9. PERFORMANCE ANALYSIS")
     print("=" * 60)
 
     texts = [
@@ -259,12 +305,13 @@ def performance_analysis_example():
 
 def main():
     """Run all examples"""
-    print("🔍 Enhanced NRC Emotion Lexicon - Debug Parameter Examples")
+    print("Enhanced NRC Emotion Lexicon - Debug Parameter Examples")
     print("=" * 80)
     print()
 
     try:
         basic_example()
+        scaling_modes_example()  # New: Three scaling modes comparison
         verbose_example()
         comprehensive_debug()
         custom_emotions_example()
@@ -273,17 +320,25 @@ def main():
         comparison_example()
         performance_analysis_example()
 
-        print("✅ All examples completed successfully!")
+        print("All examples completed successfully!")
         print()
-        print("💡 Tips for debugging:")
+        print("Tips for debugging:")
         print("- Use verbose=True to see step-by-step processing")
         print("- Use return_intermediate=True to get all internal data")
         print("- Use show_stats=True to analyze emotion matching performance")
+        print(
+            "- Use scaling_method='threshold'/'statistical'/'both' for different outputs"
+        )
         print("- Use custom_emotions/custom_weights to test different configurations")
         print("- Use expand_contractions=True for better text normalization")
+        print()
+        print("Scaling Methods:")
+        print("- 'threshold': 1-5 ordinal labels (good for categorical analysis)")
+        print("- 'statistical': 0-1 continuous scores (good for ML modeling)")
+        print("- 'both': get both outputs for comparison")
 
     except Exception as e:
-        print(f"❌ Error during examples: {e}")
+        print(f"Error during examples: {e}")
         import traceback
 
         traceback.print_exc()

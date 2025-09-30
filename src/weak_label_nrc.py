@@ -3,6 +3,7 @@ Simple NRC Emotion Lexicon Weak Labeling - String Input Only
 Implements emotion counting, anxiety scoring, and ordinal labeling (1-5 scale).
 """
 
+import math
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set
@@ -237,6 +238,9 @@ def label_text(
     lemmatize: bool = True,
     negation_window: int = 3,
     intensifier_weight: float = 1.5,
+    # Scaling method: "threshold", "statistical", or "both"
+    scaling_method: str = "threshold",
+    statistical_params: Optional[Dict[str, float]] = None,
     # Debug parameters
     verbose: bool = False,
     return_intermediate: bool = False,
@@ -261,6 +265,10 @@ def label_text(
         negation_window: Number of tokens affected by negation
         intensifier_weight: Multiplier for intensified emotions
 
+        # Scaling method options:
+        scaling_method: "threshold" (1-5 labels), "statistical" (0-1 scores), or "both"
+        statistical_params: Dict with "median" and "mad" for statistical scaling
+
         # Debug parameters:
         verbose: Print detailed processing information
         return_intermediate: Return intermediate processing results
@@ -274,7 +282,10 @@ def label_text(
 
     Returns:
         Dictionary with n_tokens, emo_counts, anxiety_score_raw, anxiety_score_norm
-        Additional debug info if debug parameters are enabled
+        Additional fields based on scaling_method:
+        - "threshold": includes anxiety_label (1-5)
+        - "statistical": includes anxiety_score_statistical (0-1)
+        - "both": includes both anxiety_label and anxiety_score_statistical
     """
     # Handle custom overrides for debugging
     if custom_emotions is not None:
@@ -423,21 +434,40 @@ def label_text(
         if emotion in weights:
             anxiety_score_raw += emotion_scores.get(emotion, 0) * weights[emotion]
 
-    # Normalize anxiety score
-    anxiety_score_norm = anxiety_score_raw / (max(1, n_tokens) ** 0.7)
-
-    if verbose:
-        print(f"Final emotion counts: {emo_counts}")
-        print(f"Anxiety score (raw): {anxiety_score_raw:.3f}")
-        print(f"Anxiety score (normalized): {anxiety_score_norm:.3f}")
-
-    # Build result dictionary
+    # Handle different scaling methods
     result = {
         "n_tokens": n_tokens,
         "emo_counts": emo_counts,
         "anxiety_score_raw": anxiety_score_raw,
-        "anxiety_score_norm": anxiety_score_norm,
     }
+
+    if scaling_method in ["threshold", "both"]:
+        # Current threshold-based normalization
+        anxiety_score_norm = anxiety_score_raw / (max(1, n_tokens) ** 0.7)
+        result["anxiety_score_norm"] = anxiety_score_norm
+        result["anxiety_label"] = get_anxiety_label_threshold(anxiety_score_norm)
+
+        if verbose:
+            print(f"Anxiety score (threshold norm): {anxiety_score_norm:.3f}")
+            print(f"Anxiety label (1-5): {result['anxiety_label']}")
+
+    if scaling_method in ["statistical", "both"]:
+        # Statistical normalization (MAD + Z-score + Sigmoid)
+        anxiety_score_statistical = apply_statistical_scaling(
+            anxiety_score_raw, statistical_params
+        )
+        result["anxiety_score_statistical"] = anxiety_score_statistical
+
+        if verbose:
+            print(f"Anxiety score (statistical): {anxiety_score_statistical:.3f}")
+
+    # For backward compatibility, always include anxiety_score_norm
+    if "anxiety_score_norm" not in result:
+        result["anxiety_score_norm"] = result["anxiety_score_statistical"]
+
+    if verbose:
+        print(f"Final emotion counts: {emo_counts}")
+        print(f"Anxiety score (raw): {anxiety_score_raw:.3f}")
 
     # Add debug information if requested
     if return_intermediate:
@@ -480,6 +510,41 @@ def get_anxiety_label_threshold(anxiety_score_norm: float) -> int:
     return 5  # fallback
 
 
+def apply_statistical_scaling(
+    anxiety_score_raw: float, statistical_params: Optional[Dict[str, float]] = None
+) -> float:
+    """
+    Apply statistical scaling (MAD + Z-score + Sigmoid) like text_process.ipynb.
+
+    Args:
+        anxiety_score_raw: Raw anxiety score
+        statistical_params: Dict with "median" and "mad" values
+                          If None, uses default parameters
+
+    Returns:
+        Anxiety score in 0-1 range using statistical normalization
+    """
+    if statistical_params is None:
+        # Default parameters (you may want to compute these from your dataset)
+        median = 0.5  # Default median
+        mad = 0.3  # Default MAD
+    else:
+        median = statistical_params.get("median", 0.5)
+        mad = statistical_params.get("mad", 0.3)
+
+    # Prevent division by zero
+    if mad <= 1e-6:
+        mad = 1e-6
+
+    # Apply MAD-based Z-score transformation
+    z = (anxiety_score_raw - median) / (1.4826 * mad)
+
+    # Apply sigmoid function to get 0-1 range
+    statistical_score = 1.0 / (1.0 + math.exp(-z))
+
+    return statistical_score
+
+
 def run_demo(lexicon_path: str = "./data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
     """
     Run demo with built-in sample texts.
@@ -492,7 +557,7 @@ def run_demo(lexicon_path: str = "./data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92
         "This is absolutely disgusting and makes me furious!",
     ]
 
-    print("🔍 NRC Emotion Lexicon Demo")
+    print("NRC Emotion Lexicon Demo")
     print("=" * 50)
 
     for i, text in enumerate(demo_texts, 1):
@@ -513,52 +578,5 @@ if __name__ == "__main__":
     print("Running demo mode...")
     run_demo()
 
-    print("\n" + "=" * 60)
-    print("Usage Examples:")
-    print("=" * 60)
-
-    # Example 1: Basic usage
-    text = "I am feeling very anxious about the upcoming exam."
-    result = label_text(text)
-    anxiety_label = get_anxiety_label_threshold(result["anxiety_score_norm"])
-
-    print(f"\nExample 1: Basic usage")
-    print(f"Text: {text}")
-    print(f"Result: {result}")
-    print(f"Anxiety label: {anxiety_label}")
-
-    # Example 2: Debug mode with verbose output
-    print(f"\nExample 2: Debug mode")
-    text2 = "I'm extremely scared and can't stop worrying."
-    result2 = label_text(text2, verbose=True, expand_contractions=True, show_stats=True)
-    print(
-        f"Anxiety label: {get_anxiety_label_threshold(result2['anxiety_score_norm'])}"
-    )
-
-    # Example 3: Custom emotions and weights
-    custom_emotions = ["fear", "sadness", "joy"]
-    custom_weights = {"fear": 2.0, "sadness": 1.5, "joy": -1.0}
-
-    print(f"\nExample 3: Custom emotions {custom_emotions}")
-    text3 = "I feel scared and sad but also a bit happy."
-    result3 = label_text(
-        text3,
-        custom_emotions=custom_emotions,
-        custom_weights=custom_weights,
-        show_stats=True,
-    )
-    print(f"Text: {text3}")
-    print(f"Emotion counts: {result3['emo_counts']}")
-    print(f"Anxiety score: {result3['anxiety_score_norm']:.3f}")
-    print(f"Statistics: {result3.get('stats', {})}")
-
-    # Example 4: Word-level analysis
-    print(f"\nExample 4: Word-level analysis")
-    text4 = "Happy thoughts mixed with anxious feelings."
-    result4 = label_text(text4, word_emotion_mapping=True, matched_words_only=True)
-    print(f"Text: {text4}")
-    print(f"Word emotions: {result4.get('word_emotions', {})}")
-    print(f"Matched words: {result4.get('matched_words', [])}")
-
-    print(f"\n💡 For more comprehensive debug examples, run:")
-    print(f"   python examples/debug_examples.py")
+    print(f"\nFor comprehensive debug examples and parameter testing, run:")
+    print(f"   python docs/test/week_label_examples.py")
