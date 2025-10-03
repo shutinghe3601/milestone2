@@ -1,0 +1,11 @@
+{
+  "keep_negations": true,
+  "remove_urls_usernames": true,
+  "comments_top_level_only": true,
+  "topk_comments": 5,
+  "length_floor_tokens": 7,
+  "date_range": {
+    "min": "2024-09-27 09:58:44",
+    "max": "2025-09-18 17:34:21"
+  }
+}
