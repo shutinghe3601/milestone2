@@ -41,3 +41,6 @@ six==1.17.0
 # Utilities
 python-dotenv==1.1.1
 update-checker==0.18.0
+
+# AI/ML APIs
+openai==1.54.3
