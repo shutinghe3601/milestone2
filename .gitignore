@@ -6,6 +6,7 @@ data/interim/*
 data/processed/reddit_submission.csv
 data/raw/posts_with_comments_20250916.jsonl
 data/raw/execution_log_20250916.md
+data/processed/reddit_anxiety_v1.csv
 
 # Keep external data directory structure but ignore large files
 /data/external/*.txt
