@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 # =============================================================================
 
 # GPT Prompt - Based on improved GAD-7 version
-PROMPT = """You are an expert mental health researcher analyzing Reddit posts for anxiety-related content. 
+PROMPT = """You are an expert mental health researcher analyzing Reddit posts for anxiety-related content.
 
 Analyze this Reddit post and classify the anxiety level using the adapted GAD-7 scale:
 
