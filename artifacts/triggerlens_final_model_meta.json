@@ -1,0 +1,35 @@
+{
+  "model_type": "RandomForest",
+  "label_source": "combined (hand + AI)",
+  "training_info": {
+    "n_samples": 1006,
+    "n_positive": 173,
+    "positive_rate": 0.17196819085487078,
+    "n_hand_labels": 599,
+    "n_ai_labels": 407
+  },
+  "performance": {
+    "test_auc": 0.848,
+    "test_ap": 0.577,
+    "optimal_threshold": 0.399
+  },
+  "hyperparameters": {
+    "n_estimators": 600,
+    "max_depth": null,
+    "min_samples_leaf": 2,
+    "class_weight": "balanced_subsample"
+  },
+  "features": {
+    "tfidf_vocab_size": 10000,
+    "nmf_topics": 15,
+    "metadata_features": 3,
+    "total_features": 10018
+  },
+  "preprocessing": {
+    "vectorizer_path": "vec_final.joblib",
+    "nmf_model_path": "nmf_final.joblib",
+    "text_column": "text_all"
+  },
+  "date_trained": "2025-10-09T15:52:51.474891",
+  "random_seed": 42
+}

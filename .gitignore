@@ -50,3 +50,7 @@ notebooks/distilbert-anxiety
 *.log
 logs/
 *.gitkeep
+
+# Build/experiment outputs
+artifacts/
+*.joblib
