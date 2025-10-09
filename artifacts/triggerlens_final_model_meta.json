@@ -30,6 +30,6 @@
     "nmf_model_path": "nmf_final.joblib",
     "text_column": "text_all"
   },
-  "date_trained": "2025-10-09T13:03:12.334010",
+  "date_trained": "2025-10-09T15:52:51.474891",
   "random_seed": 42
 }
