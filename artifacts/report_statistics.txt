@@ -1,0 +1,13 @@
+TriggerLens Final Statistics
+============================================================
+
+Total posts: 6,283
+Labeled posts: 1,006
+
+Test Performance:
+- Hand-annotated: AUC = 0.854 (BEST)
+- Combined: AUC = 0.848
+- AI-generated: AUC = 0.806
+
+Production Model: Random Forest (600 trees)
+Label strategy: Combined (hand + AI) for more training data
