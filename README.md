@@ -1,144 +1,150 @@
 # SIADS 696: Milestone II Team Project
 
-### TriggerLens: Predicting Anxiety Triggers from Reddit Data
+## TriggerLens: Predicting Anxiety Triggers from Reddit Data
 
+> **Work in Progress** — This project is under active development. Documentation and implementations are subject to change.
 
-## Project Overview
+---
 
-Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually and 31.1% facing one in their lifetime](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial.
+## Overview
 
-TriggerLens combines unsupervised and supervised approaches to build an analytical lens that both identifies discussion themes and predicts 'trigger scores' for Reddit posts, aiming to develop a predictive framework for assessing anxiety trigger potential.
+Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial.
 
-## Goal
+**TriggerLens** combines unsupervised and supervised machine learning approaches to:
+1. Identify discussion themes in mental health communities
+2. Predict anxiety trigger potential of Reddit posts
 
-To develop a predictive framework that can assess the anxiety trigger potential of Reddit posts, allowing for future research into content moderation strategies which may reduce harmful exposure while preserving valuable mental health discourse.
+### Goal
 
-## Team Members
+Develop a predictive framework for assessing anxiety trigger potential in social media content, enabling future research into content moderation strategies.
 
-- **Maria McKay (MM)**
-- **Shen Shu (SS)**
-- **Shuting He (SH)**
+### Team
+
+- **Maria McKay**
+- **Shen Shu**
+- **Shuting He**
 
 ## Project Structure
 
-```
-milestone2/
-├── configs/                    # Configuration files
-│   └── pull_config.yml        # Reddit API and data collection settings
-├── src/                       # Source code
-│   ├── pull_reddit.py         # Reddit data collection
-│   ├── build_datacard.py      # Data card generation
-│   ├── weak_label_nrc.py      # NRC emotion lexicon weak labeling
-│   └── utils/                 # Utility functions
-│       ├── cleaning.py        # Text cleaning utilities
-│       ├── language_detection.py # Language detection
-│       └── logging_config.py  # Logging configuration
-├── notebooks/                 # Jupyter notebooks
-│   ├── 01_quick_qc.ipynb     # Quick quality check
-│   └── 02_eda_weaklabels.ipynb # Exploratory data analysis
-├── data/                      # Data storage
-│   ├── raw/                   # Raw Reddit data and NRC lexicon
-│   ├── interim/               # Processed data
-│   ├── emotion_lexicon/       # Legacy NRC emotion files (deprecated)
-│   └── external/              # External datasets
-├── reports/                   # Analysis reports and visualizations
-└── docs/                      # Documentation
-```
+> Note: Final project structure is to be determined and subject to reorganization.
+
+---
 
 ## Methodology
 
-### Part A: Unsupervised Learning
-- **Dataset**: Reddit posts from mental health-related subreddits
-- **Approach**:
-  - Non-negative Matrix Factorization (NMF) with TF-IDF features
-  - BERTopic with sentence embeddings for semantic topic modeling
-- **Goal**: Identify interpretable discussion themes and rank topics by anxiety intensity
+### Unsupervised Learning (Topic Modeling)
+- **Data**: Reddit posts from mental health-related communities
+- **Methods**:
+  - Non-negative Matrix Factorization (NMF)
+  - BERTopic
+- **Goal**: Discover discussion themes and topic distributions
 
-### Part B: Supervised Learning
-- **Dataset**: Reddit posts with NRC Emotion Lexicon weak labels + GoEmotions dataset
-- **Models**: Linear Regression, Random Forest, Ordinal Logistic Regression, XGBoost
-- **Features**: Semantic embeddings derived from topic representations
-- **Goal**: Predict anxiety trigger scores for topics not well covered by NRC lexicon
+### Supervised Learning (Classification)
+- **Data**: Labeled posts (hand-annotated + AI labels generated using NRC Emotion Lexicon)
+- **Methods**:
+  - Random Forest
+  - DistilBERT fine-tuning
+- **Goal**: Predict anxiety trigger potential
+
+**Status**: Model training complete. Results pending final analysis.
+
+---
+
+## Key Results
+
+> **Coming Soon**: Detailed results and findings will be documented upon project completion.
+
+### Preliminary Findings
+
+- **Topic Modeling**: 15 interpretable themes identified across 6,283 Reddit posts
+  - NPMI coherence: 0.725
+  - Topic purity: 71.5%
+
+- **Classification**: Best model achieved AUC = 0.849
+  - Combined labeling approach (hand + AI) outperformed individual methods
+  - 9,717 features (TF-IDF + topics + metadata)
+
+---
 
 ## Setup
 
-1. **Clone the repository:**
+1. **Clone repository**:
    ```bash
    git clone https://github.com/shutinghe3601/milestone2.git
    cd milestone2
    ```
 
-2. **Create and activate virtual environment:**
+2. **Create virtual environment**:
    ```bash
    python3.11 -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
    ```
 
-3. **Install dependencies:**
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set up environment variables:**
+4. **Environment setup** (optional, for data collection):
    ```bash
    cp secret.env.example secret.env
-   # Edit secret.env with your Reddit API credentials
+   # Add Reddit API credentials to secret.env
    ```
+
+---
 
 ## Usage
 
-### Data Collection
+### Run Notebooks
+
+Analysis notebooks are in the `notebooks/` directory:
+
+| Notebook | Description |
+|----------|-------------|
+| `01_quick_qc.ipynb` | Data quality checks |
+| `02_clean_merge.ipynb` | Data preprocessing |
+| `03_topic_modeling_byNMF.ipynb` | NMF topic modeling |
+| `04_topic_modeling_byBERTopic.ipynb` | BERTopic modeling |
+| `05_dataset_comparison_analysis.ipynb` | Label comparison |
+| `06_text_classification_byDistilBERT.ipynb` | DistilBERT training |
+| `07_text_classification_random_forest.ipynb` | Random Forest training |
+
+### Data Collection (Optional)
+
 ```bash
-python src/pull_reddit.py
+python src/pull_reddit.py  # Requires Reddit API credentials
 ```
 
-### Weak Labeling with NRC Emotion Lexicon
-```bash
-# Run demo with default NRC lexicon file
-python src/weak_label_nrc.py
+### Weak Labeling
 
-# Use custom text labeling in Python
-from src.weak_label_nrc import label_text
-result = label_text("I feel anxious about tomorrow's exam.")
-print(result)
+```bash
+python src/weak_label_nrc.py  # NRC emotion-based labeling (used for AI label generation)
 ```
 
-### Data Card Generation
-```bash
-python src/build_datacard.py
-```
+---
 
-### Analysis
-Open and run the Jupyter notebooks in the `notebooks/` directory for exploratory data analysis.
+## Data Sources
 
-## NRC Emotion Lexicon Weak Labeling
+| Source | Description | Usage |
+|--------|-------------|-------|
+| **Reddit API** | Mental health subreddit posts | Primary dataset |
+| **[NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)** | Word-emotion associations (14K+ words) | AI label generation |
+| **[GoEmotions](https://research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/)** | 58K labeled Reddit comments | Reference dataset |
 
-The `weak_label_nrc.py` module provides automated emotion detection and anxiety scoring using the NRC Emotion Lexicon.
+---
 
-### Features
-- **10 Emotion Categories**: anger, anticipation, disgust, fear, joy, sadness, surprise, trust, negative, positive
-- **Anxiety Scoring**: Weighted combination of emotions with normalization
-- **Advanced Processing**: 
-  - NLTK lemmatization (optional)
-  - Negation detection ("not happy" → reduced positive score)
-  - Intensifier detection ("very scared" → amplified fear score)
-- **Ordinal Labels**: 1-5 scale anxiety classification
+## Project Status
 
-## External Datasets
+- [x] Data collection
+- [x] Data preprocessing
+- [x] Topic modeling (NMF & BERTopic)
+- [x] Model training (Random Forest & DistilBERT)
+- [ ] Final evaluation and comparison
+- [ ] Documentation and report writing
+- [ ] Presentation preparation
 
-- **[NRC Emotion Lexicon v0.92](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)**: Word-level emotion associations for 14,155+ words across 10 categories (8 emotions + positive/negative sentiment)
-  - **File**: `data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt`
-  - **Format**: Tab-separated values (word, emotion, score)
-  - **Usage**: Automated weak labeling for anxiety scoring
-- **[GoEmotions](https://research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/)**: 58,000 labeled Reddit comments with fine-grained emotions
-- **[Reddit API](https://www.reddit.com/dev/api/oauth/)**: Mental health-related subreddits data collection
-
-## Evaluation
-
-- **Topic Quality**: Coherence scores comparing BERTopic vs NMF
-- **Prediction Performance**: MAE, RMSE, Pearson/Spearman correlations
-- **Visualizations**: Topic-anxiety heatmaps, subreddit distributions, word clouds
+---
 
 ## License
 
-This project is for educational purposes as part of SIADS 696 coursework.
+Educational project for SIADS 696 coursework • University of Michigan
