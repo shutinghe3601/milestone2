@@ -13,9 +13,7 @@ tzdata==2025.2
 PyYAML==6.0.2
 
 <<<<<<< Updated upstream
-# Text processing and NLP
-nltk==3.9.1
-langdetect==1.0.9
+# Machine Learning
 scikit-learn==1.4.2
 scipy==1.11.4
 joblib==1.5.2
