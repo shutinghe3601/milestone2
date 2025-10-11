@@ -60,8 +60,9 @@ Develop a predictive framework for assessing anxiety trigger potential in social
   - NPMI coherence: 0.725
   - Topic purity: 71.5%
 
-- **Classification**: Best model achieved AUC = 0.849
-  - Combined labeling approach (hand + AI) outperformed individual methods
+- **Classification**: Random Forest achieved strong performance
+  - Hand-annotated: AUC = 0.854 (best test performance)
+  - Combined (hand + AI): AUC = 0.848 (production model, more training data)
   - 9,717 features (TF-IDF + topics + metadata)
 
 ---
