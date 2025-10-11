@@ -1,12 +1,11 @@
-# Data files
-# data/raw/*
-!data/raw/README.md
-data/interim/*
-# *.jsonl
-data/processed/reddit_submission.csv
-data/raw/posts_with_comments_20250916.jsonl
-data/raw/execution_log_20250916.md
-data/processed/reddit_anxiety_v1.csv
+# Data files - Generated outputs that can be reproduced by running notebooks
+data/interim/*.parquet
+data/interim/*.csv
+data/processed/*.parquet
+data/processed/*.csv
+data/processed/*.json
+!data/interim/README.md
+!data/processed/README.md
 
 # Keep external data directory structure but ignore large files
 /data/external/*.txt
@@ -51,6 +50,6 @@ notebooks/distilbert-anxiety
 logs/
 *.gitkeep
 
-# Build/experiment outputs
-artifacts/
-*.joblib
+# # Build/experiment outputs
+# artifacts/
+# *.joblib
