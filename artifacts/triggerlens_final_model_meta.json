@@ -11,7 +11,7 @@
   "performance": {
     "test_auc": 0.8491017964071855,
     "test_ap": 0.5662496023293779,
-    "optimal_threshold": 0.34932543274456024
+    "optimal_threshold": 0.3493254327445601
   },
   "hyperparameters": {
     "n_estimators": 600,
@@ -31,6 +31,6 @@
     "nmf_model_path": "nmf_final.joblib",
     "text_column": "text_all"
   },
-  "date_trained": "2025-10-11T12:08:04.667429",
+  "date_trained": "2025-10-11T12:28:27.258380",
   "random_seed": 42
 }
