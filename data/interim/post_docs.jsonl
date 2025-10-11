@@ -1,0 +1,4 @@
+# This file will contain concatenated documents (title + selftext + top-3 comments) in JSONL format
+# Each line will be a JSON object representing a processed document
+# Example structure:
+# {"doc_id": "unique_id", "text": "concatenated_text", "submission_id": "original_submission_id", "metadata": {...}}
