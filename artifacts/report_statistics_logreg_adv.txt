@@ -1,0 +1,11 @@
+Model: LogisticRegression (calibrated, isotonic)
+Best threshold: 0.250000
+CV AUC (mean+/-std): 0.846930 +/- 0.037938
+CV AP  (mean+/-std): 0.541803 +/- 0.095844
+Holdout AUC: 0.894611
+Holdout AP: 0.549813
+AUC 95% CI (bootstrap): [0.845009, 0.937184] (mean 0.894280)
+AP  95% CI (bootstrap): [0.407647, 0.710729] (mean 0.558397)
+
+Ablation (best):
+  setup=tfidf_nmf, AUC=0.865355, AP=0.608586

@@ -5,30 +5,13 @@ requests==2.32.5
 websocket-client==1.8.0
 
 # Data processing
-pandas==2.3.3
-numpy==1.26.4
+pandas==2.3.2
+numpy==2.3.2
 python-dateutil==2.9.0.post0
 pytz==2025.2
 tzdata==2025.2
 PyYAML==6.0.2
 
-<<<<<<< Updated upstream
-# Text processing and NLP
-nltk==3.9.1
-langdetect==1.0.9
-scikit-learn==1.4.2
-scipy==1.11.4
-joblib==1.5.2
-threadpoolctl==3.6.0
-transformers==4.57.0
-sentence-transformers==5.1.1
-bertopic==0.16.0
-umap-learn==0.5.5
-hdbscan==0.8.33
-torch==2.3.1
-torchvision==0.18.1
-torchaudio==2.3.1
-=======
 # Machine Learning
 scikit-learn==1.7.2
 scipy==1.16.2
@@ -38,12 +21,10 @@ joblib==1.5.2
 nltk==3.9.1
 langdetect==1.0.9
 transformers==4.56.2
->>>>>>> Stashed changes
 
 # Visualization
 matplotlib==3.10.6
 seaborn==0.13.2
-plotly==6.3.1
 
 # Jupyter
 jupyter==1.1.1
