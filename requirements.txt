@@ -4,7 +4,7 @@ prawcore==2.4.0
 requests==2.32.5
 websocket-client==1.8.0
 
-# Data processing
+# Data Processing
 pandas==2.3.3
 numpy==1.26.4
 python-dateutil==2.9.0.post0
@@ -12,8 +12,7 @@ pytz==2025.2
 tzdata==2025.2
 PyYAML==6.0.2
 
-<<<<<<< Updated upstream
-# Text processing and NLP
+# Text Processing and NLP
 nltk==3.9.1
 langdetect==1.0.9
 scikit-learn==1.4.2
@@ -25,20 +24,11 @@ sentence-transformers==5.1.1
 bertopic==0.16.0
 umap-learn==0.5.5
 hdbscan==0.8.33
+wordcloud==1.9.4
+gensim==4.3.3
 torch==2.3.1
 torchvision==0.18.1
 torchaudio==2.3.1
-=======
-# Machine Learning
-scikit-learn==1.7.2
-scipy==1.16.2
-joblib==1.5.2
-
-# NLP
-nltk==3.9.1
-langdetect==1.0.9
-transformers==4.56.2
->>>>>>> Stashed changes
 
 # Visualization
 matplotlib==3.10.6
