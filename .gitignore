@@ -42,8 +42,7 @@ Thumbs.db
 
 # Jupyter notebook and checkpoints
 .ipynb_checkpoints/
-notebooks/text_process_v2.ipynb
-notebooks/distilbert-anxiety
+notebooks/distilbert-text-clf
 
 # Logs
 *.log
