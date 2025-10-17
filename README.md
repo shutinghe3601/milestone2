@@ -1,151 +1,99 @@
 # SIADS 696: Milestone II Team Project
 
-## TriggerLens: Predicting Anxiety Triggers from Reddit Data
-
-> **Work in Progress** — This project is under active development. Documentation and implementations are subject to change.
-
----
+A machine learning framework that identifies and predicts anxiety-triggering content in Reddit posts using unsupervised topic modeling and supervised classification.
 
 ## Overview
 
-Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial.
-
-**TriggerLens** combines unsupervised and supervised machine learning approaches to:
-1. Identify discussion themes in mental health communities
-2. Predict anxiety trigger potential of Reddit posts
-
-### Goal
-
-Develop a predictive framework for assessing anxiety trigger potential in social media content, enabling future research into content moderation strategies.
-
-### Team
-
-- **Maria McKay**
-- **Shen Shu**
-- **Shuting He**
-
-## Project Structure
-
-> Note: Final project structure is to be determined and subject to reorganization.
-
----
+This project addresses the challenge of identifying anxiety-provoking content in online mental health discussions. With 19.1% of U.S. adults experiencing anxiety disorders annually, understanding how social media content affects mental health is crucial for developing better content moderation strategies.
 
 ## Methodology
 
-### Unsupervised Learning (Topic Modeling)
-- **Data**: Reddit posts from mental health-related communities
-- **Methods**:
-  - Non-negative Matrix Factorization (NMF)
-  - BERTopic
-- **Goal**: Discover discussion themes and topic distributions
+**Data**: 6,283 Reddit posts from mental health communities (r/anxiety, r/HealthAnxiety, r/mentalhealth, etc.)
 
-### Supervised Learning (Classification)
-- **Data**: Labeled posts (hand-annotated + AI labels generated using NRC Emotion Lexicon)
-- **Methods**:
-  - Random Forest
-  - DistilBERT fine-tuning
-- **Goal**: Predict anxiety trigger potential
+**Approach**:
+1. **Unsupervised Learning**: Non-negative Matrix Factorization (NMF) and BERTopic to discover 15 interpretable discussion themes
+2. **Supervised Learning**: Train Random Forest, Logistic Regression, and DistilBERT models on hybrid-labeled data
+3. **Feature Engineering**: Combine TF-IDF (9,699 features), topic distributions (15 features), and metadata including NRC emotion-based anxiety scores (3 features)
 
-**Status**: Model training complete. Results pending final analysis.
+**Labeling Strategy**: Hybrid approach combining 599 expert human annotations with 407 AI-generated labels using GPT-3.5-turbo API, both on 0-5 anxiety severity scale.
 
----
+## Results
 
-## Key Results
+| Model | AUC | Key Strength |
+|-------|-----|--------------|
+| DistilBERT | 0.927 | Best overall performance |
+| Logistic Regression | 0.901 | High recall (94.3%) |
+| Random Forest | 0.847 | Interpretable features |
 
-> **Coming Soon**: Detailed results and findings will be documented upon project completion.
+**Topic Modeling**: Achieved 0.725 NPMI coherence with 15 distinct themes spanning clinical symptoms, interpersonal relationships, and technical discussions.
 
-### Preliminary Findings
+## Quick Start
 
-- **Topic Modeling**: 15 interpretable themes identified across 6,283 Reddit posts
-  - NPMI coherence: 0.725
-  - Topic purity: 71.5%
-
-- **Classification**: Random Forest achieved strong performance
-  - Hand-annotated: AUC = 0.854 (best test performance)
-  - Combined (hand + AI): AUC = 0.848 (production model, more training data)
-  - 9,717 features (TF-IDF + topics + metadata)
-
----
-
-## Setup
-
-1. **Clone repository**:
+1. **Setup**:
    ```bash
-   git clone https://github.com/shutinghe3601/milestone2.git
+   git clone <repository-url>
    cd milestone2
-   ```
-
-2. **Create virtual environment**:
-   ```bash
-   python3.11 -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
    pip install -r requirements.txt
    ```
 
-4. **Environment setup** (optional, for data collection):
+2. **Generate NRC features** (if needed):
    ```bash
-   cp secret.env.example secret.env
-   # Add Reddit API credentials to secret.env
+   python add_nrc_features.py
    ```
 
----
+3. **Run complete analysis pipeline**:
 
-## Usage
+   **Data Processing & Quality Control:**
+   - `notebooks/01_quick_qc.ipynb` - Data quality checks and exploratory analysis
+   - `notebooks/02_clean_merge.ipynb` - Data preprocessing and merging
 
-### Run Notebooks
+   **Unsupervised Learning (Topic Modeling):**
+   - `notebooks/03_topic_modeling_byNMF.ipynb` - NMF topic discovery and analysis
+   - `notebooks/04_topic_modeling_byBERTopic.ipynb` - BERTopic modeling comparison
 
-Analysis notebooks are in the `notebooks/` directory:
+   **Supervised Learning (Classification):**
+   - `notebooks/05_dataset_comparison_analysis.ipynb` - Human vs AI label comparison
+   - `notebooks/06_text_classification_byDistilBERT.ipynb` - DistilBERT fine-tuning
+   - `notebooks/07_text_classification_random_forest.ipynb` - Random Forest with failure analysis
+   - `notebooks/10_text_classification_logreg_final.ipynb` - Logistic Regression final model
 
-| Notebook | Description |
-|----------|-------------|
-| `01_quick_qc.ipynb` | Data quality checks |
-| `02_clean_merge.ipynb` | Data preprocessing |
-| `03_topic_modeling_byNMF.ipynb` | NMF topic modeling |
-| `04_topic_modeling_byBERTopic.ipynb` | BERTopic modeling |
-| `05_dataset_comparison_analysis.ipynb` | Label comparison |
-| `06_text_classification_byDistilBERT.ipynb` | DistilBERT training |
-| `07_text_classification_random_forest.ipynb` | Random Forest training |
+   **Main Analysis**: Start with `07_text_classification_random_forest.ipynb` for comprehensive results
 
-### Data Collection (Optional)
+## Project Structure
 
-```bash
-python src/pull_reddit.py  # Requires Reddit API credentials
+```
+milestone2/
+├── notebooks/           # Complete analysis pipeline (01-10)
+├── src/                # Source code and utilities
+├── data/               # Raw and processed datasets
+│   ├── raw/           # Original Reddit data and lexicons
+│   ├── processed/     # Clean datasets and labels
+│   └── interim/       # Intermediate processing files
+├── artifacts/          # Trained models and results
+├── FINAL_REPORT.md     # Complete project documentation
+└── requirements.txt    # Python dependencies
 ```
 
-### Weak Labeling
+## Key Files
 
-```bash
-python src/weak_label_nrc.py  # NRC emotion-based labeling (used for AI label generation)
-```
-
----
+- `FINAL_REPORT.md` - Complete project documentation and results
+- `add_nrc_features.py` - Generate NRC emotion-based features
+- `src/weak_label_nrc.py` - NRC Emotion Lexicon processing
+- `src/simple_ai_labeling.py` - GPT-3.5-turbo AI labeling
+- `data/processed/reddit_anxiety_v1_with_nrc.parquet` - Main dataset with NRC scores
+- `artifacts/` - Pre-trained models (TF-IDF vectorizer, NMF model, classification models)
 
 ## Data Sources
 
-| Source | Description | Usage |
-|--------|-------------|-------|
-| **Reddit API** | Mental health subreddit posts | Primary dataset |
-| **[NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)** | Word-emotion associations (14K+ words) | AI label generation |
-| **[GoEmotions](https://research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/)** | 58K labeled Reddit comments | Reference dataset |
+- **Reddit API**: Mental health community posts
+- **NRC Emotion Lexicon**: Word-emotion associations for anxiety scoring
+- **Human Annotations**: Expert ratings on 0-5 anxiety scale
+- **GPT-3.5-turbo**: AI-generated weak labels for data augmentation
+
+## Citation
+
+Educational project for SIADS 696 • University of Michigan School of Information
 
 ---
 
-## Project Status
-
-- [x] Data collection
-- [x] Data preprocessing
-- [x] Topic modeling (NMF & BERTopic)
-- [x] Model training (Random Forest & DistilBERT)
-- [ ] Final evaluation and comparison
-- [ ] Documentation and report writing
-- [ ] Presentation preparation
-
----
-
-## License
-
-Educational project for SIADS 696 coursework • University of Michigan
+*This research contributes to understanding how machine learning can help identify potentially harmful content in mental health discussions while preserving valuable peer support.*

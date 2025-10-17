@@ -50,6 +50,24 @@ notebooks/distilbert-anxiety
 logs/
 *.gitkeep
 
-# # Build/experiment outputs
-# artifacts/
-# *.joblib
+# Build/experiment outputs
+.venv/
+.ruff_cache/
+notebooks/distilbert-text-clf/
+
+# Large data and model files
+*.joblib
+*.parquet
+*.csv
+data/interim/
+data/processed/
+data/02_unsup_topics/
+data/raw/
+
+# Large notebook with outputs
+notebooks/04_topic_modeling_byBERTopic.ipynb
+
+# Additional large files
+artifacts/*.png
+data/raw/NRC_EmoLex_NRC-VAD-Lexicon.txt
+notebooks/03_topic_modeling_byNMF.ipynb
