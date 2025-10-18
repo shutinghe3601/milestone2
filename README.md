@@ -1,104 +1,51 @@
 # SIADS 696: Milestone II Team Project
 
-## TriggerLens: Predicting Anxiety Triggers from Reddit Data
-
-> **Work in Progress** — This project is under active development. Documentation and implementations are subject to change.
-
----
+A machine learning framework that identifies and predicts anxiety-triggering content in Reddit posts using unsupervised topic modeling and supervised classification.
 
 ## Overview
 
-Mental health discussions on social media can be freeing for many, but they also risk amplifying anxiety-provoking content. With [19.1% of U.S. adults experiencing an anxiety disorder annually](https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder), understanding how online content triggers anxiety is crucial.
-
-**TriggerLens** combines unsupervised and supervised machine learning approaches to:
-1. Identify discussion themes in mental health communities
-2. Predict anxiety trigger potential of Reddit posts
-
-### Goal
-
-Develop a predictive framework for assessing anxiety trigger potential in social media content, enabling future research into content moderation strategies.
-
-### Team
-
-- **Maria McKay**
-- **Shen Shu**
-- **Shuting He**
-
-## Project Structure
-
-> Note: Final project structure is to be determined and subject to reorganization.
-
----
+With 19.1% of U.S. adults experiencing anxiety disorders annually (National Institute of Mental Health, n.d.), understanding how social media content affects mental health is crucial. TriggerLens combines unsupervised and supervised learning to identify discussion themes and predict anxiety trigger potential in Reddit posts.
 
 ## Methodology
 
-### Unsupervised Learning (Topic Modeling)
-- **Data**: Reddit posts from mental health-related communities
-- **Methods**:
-  - Non-negative Matrix Factorization (NMF)
-  - BERTopic
-- **Goal**: Discover discussion themes and topic distributions
+**Data**: 6,283 Reddit posts from 8 communities (r/anxiety, r/HealthAnxiety, r/mentalhealth, etc.) collected via [Reddit API](https://www.reddit.com/dev/api/).
 
-### Supervised Learning (Classification)
-- **Data**: Labeled posts (hand-annotated + AI labels generated using NRC Emotion Lexicon)
-- **Methods**:
-  - Random Forest
-  - DistilBERT fine-tuning
-- **Goal**: Predict anxiety trigger potential
+**Approach**:
+1. **Unsupervised Learning**: NMF and BERTopic topic modeling to discover interpretable discussion themes
+2. **Supervised Learning**: Random Forest, Logistic Regression, and DistilBERT models trained on hybrid-labeled data
+3. **Feature Engineering**: TF-IDF (9,699 features), topic distributions (15 features), and metadata including NRC emotion scores (3 features)
 
-**Status**: Model training complete. Results pending final analysis.
+**Labeling Strategy**: Hybrid approach combining 599  human annotations with 407 AI-generated labels using GPT-3.5-turbo API (OpenAI, 2023), both on 0-5 anxiety severity scale. NRC anxiety scores derived from [NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm) (Mohammad & Turney, 2013).
 
----
+## Results
 
-## Key Results
+| Model | AUC | AP |
+|-------|-----|----|
+| DistilBERT | 0.927 | 0.932 |
+| Logistic Regression | 0.894 | 0.571 |
+| Random Forest | 0.847 | 0.564 |
 
-> **Coming Soon**: Detailed results and findings will be documented upon project completion.
+**Topic Modeling**: NMF achieved 0.725 NPMI coherence with 15 distinct themes spanning clinical symptoms, interpersonal relationships, and technical discussions. BERTopic achieved comparable coherence (0.730) with better topic diversity (0.97) but fewer topics (7). DistilBERT was also used for supervised learning with transformer-based embeddings.
 
-### Preliminary Findings
+## Quick Start
 
-- **Topic Modeling**: 15 interpretable themes identified across 6,283 Reddit posts
-  - NPMI coherence: 0.725
-  - Topic purity: 71.5%
-
-- **Classification**: Random Forest achieved strong performance
-  - Hand-annotated: AUC = 0.854 (best test performance)
-  - Combined (hand + AI): AUC = 0.848 (production model, more training data)
-  - 9,717 features (TF-IDF + topics + metadata)
-
----
-
-## Setup
-
-1. **Clone repository**:
+1. **Setup**:
    ```bash
    git clone https://github.com/shutinghe3601/milestone2.git
    cd milestone2
-   ```
-
-2. **Create virtual environment**:
-   ```bash
-   python3.11 -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
    pip install -r requirements.txt
    ```
 
-4. **Environment setup** (optional, for data collection):
+2. **Run Analysis**:
    ```bash
-   cp secret.env.example secret.env
-   # Add Reddit API credentials to secret.env
+   jupyter notebook notebooks/
    ```
 
----
+3. **Start with Data Overview**:
+   - Begin with `01_quick_qc.ipynb` for data exploration
+   - Follow the notebook sequence for complete analysis
 
-## Usage
-
-### Run Notebooks
-
-Analysis notebooks are in the `notebooks/` directory:
+## Notebooks
 
 | Notebook | Description |
 |----------|-------------|
@@ -109,42 +56,15 @@ Analysis notebooks are in the `notebooks/` directory:
 | `05_dataset_comparison_analysis.ipynb` | Label comparison |
 | `06_text_classification_byDistilBERT.ipynb` | DistilBERT training |
 | `07_text_classification_random_forest.ipynb` | Random Forest training |
+| `08_text_classification_logistic_regression_classifier.ipynb` | Logistic Regression training |
 
-### Data Collection (Optional)
 
-```bash
-python src/pull_reddit.py  # Requires Reddit API credentials
-```
+## References
 
-### Weak Labeling
-
-```bash
-python src/weak_label_nrc.py  # NRC emotion-based labeling (used for AI label generation)
-```
-
----
-
-## Data Sources
-
-| Source | Description | Usage |
-|--------|-------------|-------|
-| **Reddit API** | Mental health subreddit posts | Primary dataset |
-| **[NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)** | Word-emotion associations (14K+ words) | AI label generation |
-| **[GoEmotions](https://research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/)** | 58K labeled Reddit comments | Reference dataset |
-
----
-
-## Project Status
-
-- [x] Data collection
-- [x] Data preprocessing
-- [x] Topic modeling (NMF & BERTopic)
-- [x] Model training (Random Forest & DistilBERT)
-- [ ] Final evaluation and comparison
-- [ ] Documentation and report writing
-- [ ] Presentation preparation
-
----
+- Mohammad, S. M., & Turney, P. D. (2013). Crowdsourcing a word-emotion association lexicon. *Computational Intelligence*, 29(3), 436–465.
+- National Institute of Mental Health. (n.d.). Any anxiety disorder. U.S. Department of Health and Human Services. https://www.nimh.nih.gov/health/statistics/any-anxiety-disorder
+- OpenAI. (2023). GPT-3.5-turbo [Large language model]. https://platform.openai.com/docs/models/gpt-3-5-turbo
+- Reddit API. (n.d.). Reddit API Documentation. https://www.reddit.com/dev/api/
 
 ## License
 
