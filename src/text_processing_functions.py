@@ -400,3 +400,56 @@ def process_text_tfidf(
     if return_stopwords:
         return tokens, auto_stop, sorted(stop_words)
     return tokens
+
+
+def process_text_fordistilBERT(
+    text: str,
+    tfidf: bool = False,
+    stemmer: SnowballStemmer | None = None,
+    *,
+    extra_stopwords: Iterable[str] | None = None,
+    return_stopwords: bool = False,
+    auto_stop_kwargs: Dict[str, Union[int, float, Tuple[int, int]]] | None = None,
+) -> Union[List[str], Tuple[List[str], List[str], List[str]]]:
+    """
+    Full preprocessing pipeline with TF-IDF-based stopword augmentation: tokenize, normalize, expand contractions, stem, and filter stopwords.
+    Optionally returns automatically discovered stopwords and the combined stopword list.
+    """
+
+
+    stop_words = set(BASE_STOPWORDS)
+
+    if tfidf:
+        auto_stop_kwargs = auto_stop_kwargs or {}
+        auto_stop = auto_stop_from_tfidf(text, **auto_stop_kwargs)
+        stop_words.update(auto_stop)
+    if extra_stopwords is not None:
+        stop_words.update(str(w).lower() for w in extra_stopwords)
+
+    if stemmer is None:
+        stemmer = SnowballStemmer("english")
+
+    text = emojis_to_text(text)
+    tokens = casual_tokenizer(text)
+
+    tokens = [token.lower() for token in tokens]
+    tokens = [NUMBER_PATTERN.sub("", token) for token in tokens]
+
+    tokens = [expandContractions(token, c_re=c_re) for token in tokens]
+    tokens = [stemmer.stem(token) for token in tokens]
+
+    tokens = [
+        w
+        for w in tokens
+        if w not in punc
+        and w not in stop_words
+        and len(w) > 1
+        and " " not in w
+    ]
+
+    if return_stopwords:
+        if tfidf:
+            return tokens, auto_stop, sorted(stop_words)
+        else:
+            return tokens, [], sorted(stop_words)
+    return tokens

@@ -21,7 +21,7 @@ With 19.1% of U.S. adults experiencing anxiety disorders annually (National Inst
 
 | Model | AUC | AP |
 |-------|-----|----|
-| DistilBERT | 0.927 | 0.932 |
+| DistilBERT | 0.956 | 0.958 |
 | Logistic Regression | 0.894 | 0.571 |
 | Random Forest | 0.847 | 0.564 |
 
