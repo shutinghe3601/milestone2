@@ -42,6 +42,7 @@ Thumbs.db
 
 # Jupyter notebook and checkpoints
 .ipynb_checkpoints/
+notebooks/09_failure_analysis.ipynb
 
 # Logs
 *.log
