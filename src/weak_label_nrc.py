@@ -423,8 +423,10 @@ def label_text(
         if emotion in weights:
             anxiety_score_raw += emotion_scores.get(emotion, 0) * weights[emotion]
 
-    # Normalize anxiety score
-    anxiety_score_norm = anxiety_score_raw / (max(1, n_tokens) ** 0.7)
+    # Normalize anxiety score using sigmoid function for 0-1 range
+    # This ensures consistent, interpretable scores regardless of text length
+    import math
+    anxiety_score_norm = 1 / (1 + math.exp(-anxiety_score_raw / max(1, n_tokens ** 0.3)))
 
     if verbose:
         print(f"Final emotion counts: {emo_counts}")
@@ -471,13 +473,16 @@ def label_text(
 
 def get_anxiety_label_threshold(anxiety_score_norm: float) -> int:
     """
-    Convert normalized anxiety score to 1-5 label using fixed thresholds.
+    Convert normalized anxiety score to 0-5 label using fixed thresholds.
+    Updated for sigmoid normalization range [0, 1].
     """
-    thresholds = [-float("inf"), -0.01, 0.01, 0.05, 0.10, float("inf")]
+    # Sigmoid normalization gives range [0, 1], map to 0-5 scale
+    # 0=very low anxiety, 5=very high anxiety
+    thresholds = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
     for i in range(len(thresholds) - 1):
         if thresholds[i] <= anxiety_score_norm < thresholds[i + 1]:
-            return i + 1
-    return 5  # fallback
+            return i
+    return 5  # fallback for maximum score (1.0)
 
 
 def run_demo(lexicon_path: str = "./data/raw/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):

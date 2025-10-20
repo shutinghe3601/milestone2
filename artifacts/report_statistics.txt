@@ -5,9 +5,9 @@ Total posts: 6,283
 Labeled posts: 1,006
 
 Test Performance:
-- Combined: AUC = 0.849 (BEST)
-- Hand: AUC = 0.845
-- Ai: AUC = 0.815
+- Hand: AUC = 0.853 (BEST)
+- Combined: AUC = 0.847
+- Ai: AUC = 0.814
 
 Production Model: Random Forest (600 trees)
 Label strategy: Combined (best performing)

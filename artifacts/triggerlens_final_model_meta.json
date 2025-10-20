@@ -9,9 +9,9 @@
     "n_ai_labels": 401
   },
   "performance": {
-    "test_auc": 0.8491017964071855,
-    "test_ap": 0.5662496023293779,
-    "optimal_threshold": 0.3493254327445601
+    "test_auc": 0.8468776732249788,
+    "test_ap": 0.5642735411301842,
+    "optimal_threshold": 0.3638806176705392
   },
   "hyperparameters": {
     "n_estimators": 600,
@@ -21,16 +21,16 @@
   },
   "features": {
     "tfidf_vocab_size": 10000,
-    "tfidf_actual_features": 9699,
+    "tfidf_actual_features": 9698,
     "nmf_topics": 15,
     "metadata_features": 3,
-    "total_features": 9717
+    "total_features": 9716
   },
   "preprocessing": {
     "vectorizer_path": "vec_final.joblib",
     "nmf_model_path": "nmf_final.joblib",
     "text_column": "text_all"
   },
-  "date_trained": "2025-10-11T12:28:27.258380",
+  "date_trained": "2025-10-16T16:35:31.642390",
   "random_seed": 42
 }
