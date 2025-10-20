@@ -57,6 +57,9 @@ With 19.1% of U.S. adults experiencing anxiety disorders annually (National Inst
 | `06_text_classification_byDistilBERT.ipynb` | DistilBERT training |
 | `07_text_classification_random_forest.ipynb` | Random Forest training |
 | `08_text_classification_logistic_regression_classifier.ipynb` | Logistic Regression training |
+| `09_failure_analysis_ofDistilBERT.ipynb` | DistilBERT failure analysis |
+| `10_failure_analysis_ofLogReg.ipynb` | Logistic Regression failure analysis |
+
 
 
 ## References
